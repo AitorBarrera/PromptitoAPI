@@ -18,6 +18,6 @@ namespace Promptito.Domain.Modelos
         public string Descripcion { get; set; }
 
         //Navegacion
-        public List<Prompt> ListaPrompts { get; set; }
+        public List<Prompt>? ListaPrompts { get; set; }
     }
 }

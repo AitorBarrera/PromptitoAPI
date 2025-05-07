@@ -22,7 +22,7 @@ public partial class Usuario
     public string? AvatarUrl { get; set; }
 
     //Navegacion
-    public List<Prompt> ListaPromptsCreados { get; set; }
+    public List<Prompt>? ListaPromptsCreados { get; set; }
 
-    public List<Prompt> ListaPromptsFavoritos { get; set; }
+    public List<Prompt>? ListaPromptsFavoritos { get; set; }
 }

@@ -11,7 +11,6 @@ public class Prompt
     public Prompt()
     {
     }
-
     public int Id { get; set; }
 
     public string Titulo { get; set; }
@@ -23,13 +22,13 @@ public class Prompt
     public DateTime fechaCreacion { get; set; }
 
     //Atributos de navegacion por relacion
-    public Usuario UsuarioCreador { get; set; } = null!;
+    public Usuario? UsuarioCreador { get; set; } = null!;
 
-    public List<Llm> ListaLlms { get; set; } 
+    public List<Llm>? ListaLlms { get; set; } 
 
-    public List<Tematica> ListaTematicas { get; set; }
+    public List<Tematica>? ListaTematicas { get; set; }
 
-    public List<Usuario> ListaUsuariosEnFavoritos { get; set; }
+    public List<Usuario>? ListaUsuariosEnFavoritos { get; set; }
     
-    public List<Coleccion> ListaColecciones { get; set; }
+    public List<Coleccion>? ListaColecciones { get; set; }
 }

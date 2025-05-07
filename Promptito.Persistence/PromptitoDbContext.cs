@@ -24,21 +24,7 @@ public partial class PromptitoDbContext : DbContext, IPromptitoDbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Usuario>()
-        .HasIndex(u => u.Email)
-        .IsUnique();
-
-        modelBuilder.Entity<Usuario>()
-            .HasIndex(u => u.Nombre)
-            .IsUnique();
-
-        modelBuilder.Entity<Llm>()
-            .HasIndex(l => new { l.Nombre, l.Version })
-            .IsUnique();
-
-        modelBuilder.Entity<Tematica>()
-            .HasIndex(t => t.Nombre)
-            .IsUnique();
+        modelBuilder.HasDefaultSchema("v2");
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(PromptitoDbContext).Assembly);
     }

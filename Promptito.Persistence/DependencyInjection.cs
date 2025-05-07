@@ -16,7 +16,7 @@ namespace Promptito.Persistence
         public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<PromptitoDbContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("PromptitoDbConnectionVacia"))
+                options.UseNpgsql(configuration.GetConnectionString("Promptito-EFConnection"))
 
                 );
 

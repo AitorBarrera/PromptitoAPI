@@ -26,6 +26,10 @@ namespace Promptito.Persistence.Configurations
             builder
                 .HasMany(p => p.ListaUsuariosEnFavoritos)
                 .WithMany(u => u.ListaPromptsFavoritos);
+
+            builder
+                .HasMany(p => p.ListaTematicas)
+                .WithMany(t => t.ListaPrompts);
         }
     }
 }

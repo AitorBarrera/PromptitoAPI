@@ -12,14 +12,15 @@ using Promptito.Persistence;
 namespace Promptito.Persistence.Migrations
 {
     [DbContext(typeof(PromptitoDbContext))]
-    [Migration("20250507114609_initMigration")]
-    partial class initMigration
+    [Migration("20250507172708_migration1")]
+    partial class migration1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("v2")
                 .HasAnnotation("ProductVersion", "9.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -37,7 +38,7 @@ namespace Promptito.Persistence.Migrations
 
                     b.HasIndex("ListaPromptsId");
 
-                    b.ToTable("ColeccionPrompt");
+                    b.ToTable("ColeccionPrompt", "v2");
                 });
 
             modelBuilder.Entity("LlmPrompt", b =>
@@ -52,22 +53,22 @@ namespace Promptito.Persistence.Migrations
 
                     b.HasIndex("ListaPromptsId");
 
-                    b.ToTable("LlmPrompt");
+                    b.ToTable("LlmPrompt", "v2");
                 });
 
-            modelBuilder.Entity("PromptTema", b =>
+            modelBuilder.Entity("PromptTematica", b =>
                 {
                     b.Property<int>("ListaPromptsId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ListaTemasId")
+                    b.Property<int>("ListaTematicasId")
                         .HasColumnType("integer");
 
-                    b.HasKey("ListaPromptsId", "ListaTemasId");
+                    b.HasKey("ListaPromptsId", "ListaTematicasId");
 
-                    b.HasIndex("ListaTemasId");
+                    b.HasIndex("ListaTematicasId");
 
-                    b.ToTable("PromptTema");
+                    b.ToTable("PromptTematica", "v2");
                 });
 
             modelBuilder.Entity("PromptUsuario", b =>
@@ -82,7 +83,7 @@ namespace Promptito.Persistence.Migrations
 
                     b.HasIndex("ListaUsuariosEnFavoritosId");
 
-                    b.ToTable("PromptUsuario");
+                    b.ToTable("PromptUsuario", "v2");
                 });
 
             modelBuilder.Entity("Promptito.Domain.Llm", b =>
@@ -103,7 +104,10 @@ namespace Promptito.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Llms");
+                    b.HasIndex("Nombre", "Version")
+                        .IsUnique();
+
+                    b.ToTable("llm", "v2");
                 });
 
             modelBuilder.Entity("Promptito.Domain.Modelos.Coleccion", b =>
@@ -124,7 +128,7 @@ namespace Promptito.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Colecciones");
+                    b.ToTable("coleccion", "v2");
                 });
 
             modelBuilder.Entity("Promptito.Domain.Prompt", b =>
@@ -153,10 +157,10 @@ namespace Promptito.Persistence.Migrations
 
                     b.HasIndex("UsuarioId");
 
-                    b.ToTable("Prompts");
+                    b.ToTable("prompt", "v2");
                 });
 
-            modelBuilder.Entity("Promptito.Domain.Tema", b =>
+            modelBuilder.Entity("Promptito.Domain.Tematica", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -170,7 +174,10 @@ namespace Promptito.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Temas");
+                    b.HasIndex("Nombre")
+                        .IsUnique();
+
+                    b.ToTable("tematica", "v2");
                 });
 
             modelBuilder.Entity("Promptito.Domain.Usuario", b =>
@@ -198,7 +205,13 @@ namespace Promptito.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Usuarios");
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("Nombre")
+                        .IsUnique();
+
+                    b.ToTable("usuario", "v2");
                 });
 
             modelBuilder.Entity("ColeccionPrompt", b =>
@@ -231,7 +244,7 @@ namespace Promptito.Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PromptTema", b =>
+            modelBuilder.Entity("PromptTematica", b =>
                 {
                     b.HasOne("Promptito.Domain.Prompt", null)
                         .WithMany()
@@ -239,9 +252,9 @@ namespace Promptito.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Promptito.Domain.Tema", null)
+                    b.HasOne("Promptito.Domain.Tematica", null)
                         .WithMany()
-                        .HasForeignKey("ListaTemasId")
+                        .HasForeignKey("ListaTematicasId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

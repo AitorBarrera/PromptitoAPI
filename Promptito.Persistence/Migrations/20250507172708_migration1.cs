@@ -7,13 +7,17 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Promptito.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class initMigration : Migration
+    public partial class migration1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "v2");
+
             migrationBuilder.CreateTable(
-                name: "Colecciones",
+                name: "coleccion",
+                schema: "v2",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -23,11 +27,12 @@ namespace Promptito.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Colecciones", x => x.Id);
+                    table.PrimaryKey("PK_coleccion", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Llms",
+                name: "llm",
+                schema: "v2",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -37,11 +42,12 @@ namespace Promptito.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Llms", x => x.Id);
+                    table.PrimaryKey("PK_llm", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Temas",
+                name: "tematica",
+                schema: "v2",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -50,11 +56,12 @@ namespace Promptito.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Temas", x => x.Id);
+                    table.PrimaryKey("PK_tematica", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Usuarios",
+                name: "usuario",
+                schema: "v2",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -66,11 +73,12 @@ namespace Promptito.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Usuarios", x => x.Id);
+                    table.PrimaryKey("PK_usuario", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Prompts",
+                name: "prompt",
+                schema: "v2",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -82,17 +90,19 @@ namespace Promptito.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Prompts", x => x.Id);
+                    table.PrimaryKey("PK_prompt", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Prompts_Usuarios_UsuarioId",
+                        name: "FK_prompt_usuario_UsuarioId",
                         column: x => x.UsuarioId,
-                        principalTable: "Usuarios",
+                        principalSchema: "v2",
+                        principalTable: "usuario",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ColeccionPrompt",
+                schema: "v2",
                 columns: table => new
                 {
                     ListaColeccionesId = table.Column<int>(type: "integer", nullable: false),
@@ -102,21 +112,24 @@ namespace Promptito.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_ColeccionPrompt", x => new { x.ListaColeccionesId, x.ListaPromptsId });
                     table.ForeignKey(
-                        name: "FK_ColeccionPrompt_Colecciones_ListaColeccionesId",
+                        name: "FK_ColeccionPrompt_coleccion_ListaColeccionesId",
                         column: x => x.ListaColeccionesId,
-                        principalTable: "Colecciones",
+                        principalSchema: "v2",
+                        principalTable: "coleccion",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ColeccionPrompt_Prompts_ListaPromptsId",
+                        name: "FK_ColeccionPrompt_prompt_ListaPromptsId",
                         column: x => x.ListaPromptsId,
-                        principalTable: "Prompts",
+                        principalSchema: "v2",
+                        principalTable: "prompt",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "LlmPrompt",
+                schema: "v2",
                 columns: table => new
                 {
                     ListaLlmsId = table.Column<int>(type: "integer", nullable: false),
@@ -126,45 +139,51 @@ namespace Promptito.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_LlmPrompt", x => new { x.ListaLlmsId, x.ListaPromptsId });
                     table.ForeignKey(
-                        name: "FK_LlmPrompt_Llms_ListaLlmsId",
+                        name: "FK_LlmPrompt_llm_ListaLlmsId",
                         column: x => x.ListaLlmsId,
-                        principalTable: "Llms",
+                        principalSchema: "v2",
+                        principalTable: "llm",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_LlmPrompt_Prompts_ListaPromptsId",
+                        name: "FK_LlmPrompt_prompt_ListaPromptsId",
                         column: x => x.ListaPromptsId,
-                        principalTable: "Prompts",
+                        principalSchema: "v2",
+                        principalTable: "prompt",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "PromptTema",
+                name: "PromptTematica",
+                schema: "v2",
                 columns: table => new
                 {
                     ListaPromptsId = table.Column<int>(type: "integer", nullable: false),
-                    ListaTemasId = table.Column<int>(type: "integer", nullable: false)
+                    ListaTematicasId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PromptTema", x => new { x.ListaPromptsId, x.ListaTemasId });
+                    table.PrimaryKey("PK_PromptTematica", x => new { x.ListaPromptsId, x.ListaTematicasId });
                     table.ForeignKey(
-                        name: "FK_PromptTema_Prompts_ListaPromptsId",
+                        name: "FK_PromptTematica_prompt_ListaPromptsId",
                         column: x => x.ListaPromptsId,
-                        principalTable: "Prompts",
+                        principalSchema: "v2",
+                        principalTable: "prompt",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PromptTema_Temas_ListaTemasId",
-                        column: x => x.ListaTemasId,
-                        principalTable: "Temas",
+                        name: "FK_PromptTematica_tematica_ListaTematicasId",
+                        column: x => x.ListaTematicasId,
+                        principalSchema: "v2",
+                        principalTable: "tematica",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "PromptUsuario",
+                schema: "v2",
                 columns: table => new
                 {
                     ListaPromptsFavoritosId = table.Column<int>(type: "integer", nullable: false),
@@ -174,74 +193,118 @@ namespace Promptito.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_PromptUsuario", x => new { x.ListaPromptsFavoritosId, x.ListaUsuariosEnFavoritosId });
                     table.ForeignKey(
-                        name: "FK_PromptUsuario_Prompts_ListaPromptsFavoritosId",
+                        name: "FK_PromptUsuario_prompt_ListaPromptsFavoritosId",
                         column: x => x.ListaPromptsFavoritosId,
-                        principalTable: "Prompts",
+                        principalSchema: "v2",
+                        principalTable: "prompt",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PromptUsuario_Usuarios_ListaUsuariosEnFavoritosId",
+                        name: "FK_PromptUsuario_usuario_ListaUsuariosEnFavoritosId",
                         column: x => x.ListaUsuariosEnFavoritosId,
-                        principalTable: "Usuarios",
+                        principalSchema: "v2",
+                        principalTable: "usuario",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ColeccionPrompt_ListaPromptsId",
+                schema: "v2",
                 table: "ColeccionPrompt",
                 column: "ListaPromptsId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_llm_Nombre_Version",
+                schema: "v2",
+                table: "llm",
+                columns: new[] { "Nombre", "Version" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_LlmPrompt_ListaPromptsId",
+                schema: "v2",
                 table: "LlmPrompt",
                 column: "ListaPromptsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Prompts_UsuarioId",
-                table: "Prompts",
+                name: "IX_prompt_UsuarioId",
+                schema: "v2",
+                table: "prompt",
                 column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PromptTema_ListaTemasId",
-                table: "PromptTema",
-                column: "ListaTemasId");
+                name: "IX_PromptTematica_ListaTematicasId",
+                schema: "v2",
+                table: "PromptTematica",
+                column: "ListaTematicasId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PromptUsuario_ListaUsuariosEnFavoritosId",
+                schema: "v2",
                 table: "PromptUsuario",
                 column: "ListaUsuariosEnFavoritosId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tematica_Nombre",
+                schema: "v2",
+                table: "tematica",
+                column: "Nombre",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_usuario_Email",
+                schema: "v2",
+                table: "usuario",
+                column: "Email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_usuario_Nombre",
+                schema: "v2",
+                table: "usuario",
+                column: "Nombre",
+                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ColeccionPrompt");
+                name: "ColeccionPrompt",
+                schema: "v2");
 
             migrationBuilder.DropTable(
-                name: "LlmPrompt");
+                name: "LlmPrompt",
+                schema: "v2");
 
             migrationBuilder.DropTable(
-                name: "PromptTema");
+                name: "PromptTematica",
+                schema: "v2");
 
             migrationBuilder.DropTable(
-                name: "PromptUsuario");
+                name: "PromptUsuario",
+                schema: "v2");
 
             migrationBuilder.DropTable(
-                name: "Colecciones");
+                name: "coleccion",
+                schema: "v2");
 
             migrationBuilder.DropTable(
-                name: "Llms");
+                name: "llm",
+                schema: "v2");
 
             migrationBuilder.DropTable(
-                name: "Temas");
+                name: "tematica",
+                schema: "v2");
 
             migrationBuilder.DropTable(
-                name: "Prompts");
+                name: "prompt",
+                schema: "v2");
 
             migrationBuilder.DropTable(
-                name: "Usuarios");
+                name: "usuario",
+                schema: "v2");
         }
     }
 }
