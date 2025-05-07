@@ -8,7 +8,6 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-//builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
 
 
@@ -17,6 +16,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<PromptitoDbContext>();
+    context.Database.Migrate();
 }
 
 if (app.Environment.IsDevelopment())

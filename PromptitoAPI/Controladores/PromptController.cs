@@ -24,7 +24,7 @@ namespace Promptito.API.Controladores
         [HttpGet("/{id}", Name = "GetPromptById")]
         public async Task<ActionResult<Prompt>> GetPromptById(int id)
         {
-            return await _context.Prompts.FindAsync(id);
+            return await _context.Prompts.Include(p => p.UsuarioCreador).FirstAsync();
         }
     }
 }

@@ -2,39 +2,34 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Promptito.Domain.Modelos;
 
 namespace Promptito.Domain;
 
-[Table("prompt", Schema = "Promptito")]
-public partial class Prompt
+public class Prompt
 {
-    [Key]
-    [Column("id")]
+    public Prompt()
+    {
+    }
+
     public int Id { get; set; }
 
-    [Column("titulo")]
-    [StringLength(150)]
-    public string Titulo { get; set; } = null!;
+    public string Titulo { get; set; }
 
-    [Column("texto_contenido")]
-    public string TextoContenido { get; set; } = null!;
+    public string TextoContenido { get; set; }
 
-    [Column("id_usuario_creador")]
-    public int IdUsuarioCreador { get; set; }
+    public int UsuarioId { get; set; }
 
-    [ForeignKey("IdUsuarioCreador")]
-    [InverseProperty("Prompts")]
-    public virtual Usuario IdUsuarioCreadorNavigation { get; set; } = null!;
+    public DateTime fechaCreacion { get; set; }
 
-    [ForeignKey("PromptId")]
-    [InverseProperty("Prompts")]
-    public virtual ICollection<Llm> Llms { get; set; } = new List<Llm>();
+    //Atributos de navegacion por relacion
+    public Usuario UsuarioCreador { get; set; } = null!;
 
-    [ForeignKey("PromptId")]
-    [InverseProperty("Prompts")]
-    public virtual ICollection<Tema> Temas { get; set; } = new List<Tema>();
+    public List<Llm> ListaLlms { get; set; } 
 
-    [ForeignKey("PromptId")]
-    [InverseProperty("PromptsNavigation")]
-    public virtual ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
+    public List<Tematica> ListaTematicas { get; set; }
+
+    public List<Usuario> ListaUsuariosEnFavoritos { get; set; }
+    
+    public List<Coleccion> ListaColecciones { get; set; }
 }

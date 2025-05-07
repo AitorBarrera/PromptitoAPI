@@ -4,18 +4,15 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Promptito.Domain;
-
-public class Llm
+public class Tematica
 {
-    public Llm()
+    public Tematica()
     {
     }
 
     public int Id { get; set; }
 
     public string Nombre { get; set; }
-
-    public string Version { get; set; }
 
     public List<Prompt>? ListaPrompts { get; set; }
 }

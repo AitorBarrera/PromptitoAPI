@@ -9,7 +9,7 @@ namespace Promptito.Application.Interfaces
 
         public DbSet<Prompt> Prompts { get; set; }
 
-        public DbSet<Tema> Temas { get; set; }
+        public DbSet<Tematica> Temas { get; set; }
 
         public DbSet<Usuario> Usuarios { get; set; }
     }
