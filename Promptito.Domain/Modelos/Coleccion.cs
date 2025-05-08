@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Promptito.Domain;
 
-[Table("llm")]
-[Index("Nombre", Name = "idx_llm_nombre")]
-public partial class Llm
+[Table("coleccion")]
+[Index("Nombre", Name = "idx_coleccion_nombre")]
+public partial class Coleccion
 {
     [Key]
     [Column("id")]
@@ -18,11 +18,14 @@ public partial class Llm
     [StringLength(100)]
     public string Nombre { get; set; } = null!;
 
-    [Column("version")]
-    [StringLength(50)]
-    public string Version { get; set; } = null!;
+    [Column("descripcion")]
+    public string Descripcion { get; set; } = null!;
 
-    [ForeignKey("LlmId")]
-    [InverseProperty("Llms")]
+    [ForeignKey("ColeccionId")]
+    [InverseProperty("Coleccions")]
     public virtual ICollection<Prompt> Prompts { get; set; } = new List<Prompt>();
+
+    [ForeignKey("ColeccionId")]
+    [InverseProperty("Coleccions")]
+    public virtual ICollection<Tematica> Tematicas { get; set; } = new List<Tematica>();
 }

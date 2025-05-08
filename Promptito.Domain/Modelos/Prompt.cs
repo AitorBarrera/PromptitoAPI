@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace Promptito.Domain;
+namespace Promptito.Domain  ;
 
-[Table("prompt", Schema = "Promptito")]
+[Table("prompt")]
+[Index("Titulo", Name = "idx_prompt_titulo")]
 public partial class Prompt
 {
     [Key]
@@ -13,18 +15,28 @@ public partial class Prompt
     public int Id { get; set; }
 
     [Column("titulo")]
-    [StringLength(150)]
+    [StringLength(255)]
     public string Titulo { get; set; } = null!;
 
     [Column("texto_contenido")]
     public string TextoContenido { get; set; } = null!;
 
-    [Column("id_usuario_creador")]
-    public int IdUsuarioCreador { get; set; }
+    [Column("descripcion")]
+    public string Descripcion { get; set; } = null!;
 
-    [ForeignKey("IdUsuarioCreador")]
+    [Column("fecha_creacion")]
+    public DateOnly FechaCreacion { get; set; }
+
+    [Column("usuariocreador_id")]
+    public int UsuariocreadorId { get; set; }
+
+    [ForeignKey("UsuariocreadorId")]
     [InverseProperty("Prompts")]
-    public virtual Usuario IdUsuarioCreadorNavigation { get; set; } = null!;
+    public virtual Usuario Usuariocreador { get; set; } = null!;
+
+    [ForeignKey("PromptId")]
+    [InverseProperty("Prompts")]
+    public virtual ICollection<Coleccion> Coleccions { get; set; } = new List<Coleccion>();
 
     [ForeignKey("PromptId")]
     [InverseProperty("Prompts")]
@@ -32,7 +44,7 @@ public partial class Prompt
 
     [ForeignKey("PromptId")]
     [InverseProperty("Prompts")]
-    public virtual ICollection<Tema> Temas { get; set; } = new List<Tema>();
+    public virtual ICollection<Tematica> Tematicas { get; set; } = new List<Tematica>();
 
     [ForeignKey("PromptId")]
     [InverseProperty("PromptsNavigation")]

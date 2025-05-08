@@ -15,13 +15,13 @@ namespace Promptito.Persistence
     {
         public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<PromptitoDbContext>(options =>
+            services.AddDbContext<PromptitoPgAdminContext>(options =>
                 options.UseNpgsql(configuration.GetConnectionString("PromptitoDbConnection"))
 
                 );
 
-            services.AddScoped<IPromptitoDbContext>(provider =>
-                provider.GetService<PromptitoDbContext>());
+            services.AddScoped<IPromptitoPgAdminContext>(provider =>
+                provider.GetService<PromptitoPgAdminContext>());
 
             return services;
         }

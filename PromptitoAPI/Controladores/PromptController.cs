@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Promptito.Application.Interfaces;
 using Promptito.Domain;
+using Promptito.Persistence;
 
 namespace Promptito.API.Controladores
 {
@@ -9,8 +10,8 @@ namespace Promptito.API.Controladores
     [Route("prompts")]
     public class PromptController : ControllerBase
     {
-        private readonly IPromptitoDbContext _context;
-        public PromptController(IPromptitoDbContext context)
+        private readonly IPromptitoPgAdminContext _context;
+        public PromptController(IPromptitoPgAdminContext context)
         {
             _context = context;
         }

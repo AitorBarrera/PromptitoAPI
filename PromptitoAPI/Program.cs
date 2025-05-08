@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Promptito.Application.Interfaces;
 using Promptito.Persistence;
 
 
@@ -16,7 +17,7 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var context = scope.ServiceProvider.GetRequiredService<PromptitoDbContext>();
+    var context = scope.ServiceProvider.GetRequiredService<PromptitoPgAdminContext>();
 }
 
 if (app.Environment.IsDevelopment())
