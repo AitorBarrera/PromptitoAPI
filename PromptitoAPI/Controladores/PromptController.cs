@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Promptito.Application.Interfaces;
-using Promptito.Domain;
-using Promptito.Persistence;
+using Promptito.Domain.Modelos;
+using Promptito.Persistance;
 
 namespace Promptito.API.Controladores
 {
@@ -10,8 +10,8 @@ namespace Promptito.API.Controladores
     [Route("prompts")]
     public class PromptController : ControllerBase
     {
-        private readonly IPromptitoPgAdminContext _context;
-        public PromptController(IPromptitoPgAdminContext context)
+        private readonly IPromptitoDbContext _context;
+        public PromptController(IPromptitoDbContext context)
         {
             _context = context;
         }
@@ -19,7 +19,8 @@ namespace Promptito.API.Controladores
         [HttpGet("", Name = "GetPrompts")]
         public async Task<ActionResult<List<Prompt>>> GetAllPrompts()
         {
-            return await _context.Prompts.ToListAsync();
+            return await _context.Prompts
+                .ToListAsync();
         }
 
         [HttpGet("/{id}", Name = "GetPromptById")]

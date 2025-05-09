@@ -1,6 +1,6 @@
+using Cartas.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Promptito.Application.Interfaces;
-using Promptito.Persistence;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,15 +9,13 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-//builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
-
 
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var context = scope.ServiceProvider.GetRequiredService<PromptitoPgAdminContext>();
+    var context = scope.ServiceProvider.GetRequiredService<IPromptitoDbContext>();
 }
 
 if (app.Environment.IsDevelopment())

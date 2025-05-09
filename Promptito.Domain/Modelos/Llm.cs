@@ -1,28 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
-namespace Promptito.Domain;
+namespace Promptito.Domain.Modelos;
 
-[Table("llm")]
-[Index("Nombre", Name = "idx_llm_nombre")]
 public partial class Llm
 {
-    [Key]
-    [Column("id")]
     public int Id { get; set; }
 
-    [Column("nombre")]
-    [StringLength(100)]
     public string Nombre { get; set; } = null!;
 
-    [Column("version")]
-    [StringLength(50)]
     public string Version { get; set; } = null!;
 
-    [ForeignKey("LlmId")]
-    [InverseProperty("Llms")]
     public virtual ICollection<Prompt> Prompts { get; set; } = new List<Prompt>();
 }
