@@ -1,5 +1,4 @@
 using Cartas.Persistence;
-using Microsoft.EntityFrameworkCore;
 using Promptito.Application.Interfaces;
 
 

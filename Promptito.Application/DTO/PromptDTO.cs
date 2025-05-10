@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Promptito.Domain.Modelos;
 
 namespace Promptito.Application.DTO
 {
@@ -14,8 +15,11 @@ namespace Promptito.Application.DTO
 
         public string Titulo { get; set; } = null!;
 
-        public string TextoContenido { get; set; } = null!;
+        public string Descripcion { get; set; } = null!;
 
-        public int IdUsuarioCreador { get; set; }
+        public DateOnly FechaCreacion { get; set; }
+
+        public int UsuarioCreadorId { get; set; }
+        public virtual ICollection<LlmDTO> Llms { get; set; } = new List<LlmDTO>();
     }
 }

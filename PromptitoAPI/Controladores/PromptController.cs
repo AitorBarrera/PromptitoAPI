@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Promptito.Application.DTO;
 using Promptito.Application.Interfaces;
 using Promptito.Domain.Modelos;
 using Promptito.Persistance;
@@ -17,9 +18,23 @@ namespace Promptito.API.Controladores
         }
 
         [HttpGet("", Name = "GetPrompts")]
-        public async Task<ActionResult<List<Prompt>>> GetAllPrompts()
+        public async Task<ActionResult<List<PromptDTO>>> GetAllPrompts()
         {
             return await _context.Prompts
+                .Select(p => new PromptDTO
+                {
+                    Id = p.Id,
+                    Titulo = p.Titulo,
+                    Descripcion = p.Descripcion,
+                    FechaCreacion = p.FechaCreacion,
+                    UsuarioCreadorId = p.UsuarioCreadorId,
+                    Llms = p.Llms.Select(l => new LlmDTO
+                    {
+                        Id = l.Id,
+                        Nombre = l.Nombre,
+                        Version = l.Version
+                    }).ToList()
+                })
                 .ToListAsync();
         }
 
