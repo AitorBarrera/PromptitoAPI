@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Promptito.Application.DTO;
 using Promptito.Application.Interfaces;
@@ -12,29 +14,18 @@ namespace Promptito.API.Controladores
     public class PromptController : ControllerBase
     {
         private readonly IPromptitoDbContext _context;
-        public PromptController(IPromptitoDbContext context)
+        private readonly IMapper _mapper;
+        public PromptController(IPromptitoDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [HttpGet("", Name = "GetPrompts")]
         public async Task<ActionResult<List<PromptDTO>>> GetAllPrompts()
         {
             return await _context.Prompts
-                .Select(p => new PromptDTO
-                {
-                    Id = p.Id,
-                    Titulo = p.Titulo,
-                    Descripcion = p.Descripcion,
-                    FechaCreacion = p.FechaCreacion,
-                    UsuarioCreadorId = p.UsuarioCreadorId,
-                    Llms = p.Llms.Select(l => new LlmDTO
-                    {
-                        Id = l.Id,
-                        Nombre = l.Nombre,
-                        Version = l.Version
-                    }).ToList()
-                })
+                .ProjectTo<PromptDTO>(_mapper.ConfigurationProvider)
                 .ToListAsync();
         }
 

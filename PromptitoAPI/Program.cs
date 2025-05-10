@@ -1,11 +1,19 @@
+using AutoMapper;
 using Cartas.Persistence;
 using Promptito.Application.Interfaces;
+using Promptito.Application.Perfiles;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+var mapperConfig = new MapperConfiguration(cfg => {
+    cfg.AddProfile(new AutoMapperProfile());
+});
+builder.Services.AddSingleton(mapperConfig.CreateMapper());
+
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddPersistence(builder.Configuration);
