@@ -23,5 +23,5 @@ public partial class Prompt
 
     public virtual ICollection<Tematica> Tematicas { get; set; } = new List<Tematica>();
 
-    public virtual ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
+    public virtual ICollection<Usuario> EnFavoritosDe { get; set; } = new List<Usuario>();
 }

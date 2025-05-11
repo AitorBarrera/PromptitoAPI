@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Promptito.Domain.Modelos;
 
-public partial class Parametro
+public partial class ParametroMappedDTO
 {
     public int Id { get; set; }
 
@@ -12,8 +12,6 @@ public partial class Parametro
     public string TipoValor { get; set; } = null!;
 
     public string? ValorPredeterminado { get; set; }
-
-    public int PromptVarianteId { get; set; }
 
     public virtual ICollection<OpcionParametro> OpcionParametros { get; set; } = new List<OpcionParametro>();
 

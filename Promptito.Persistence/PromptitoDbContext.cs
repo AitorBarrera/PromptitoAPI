@@ -111,7 +111,7 @@ public partial class PromptitoDbContext : DbContext, IPromptitoDbContext
                 .HasColumnName("titulo");
             entity.Property(e => e.UsuarioCreadorId).HasColumnName("usuario_creador_id");
 
-            entity.HasOne(d => d.UsuarioCreador).WithMany(p => p.PromptsNavigation)
+            entity.HasOne(d => d.UsuarioCreador).WithMany(p => p.PromptsCreados)
                 .HasForeignKey(d => d.UsuarioCreadorId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("prompt_usuario_creador_id_fkey");
@@ -154,7 +154,7 @@ public partial class PromptitoDbContext : DbContext, IPromptitoDbContext
                         j.IndexerProperty<int>("TematicaId").HasColumnName("tematica_id");
                     });
 
-            entity.HasMany(d => d.Usuarios).WithMany(p => p.Prompts)
+            entity.HasMany(d => d.EnFavoritosDe).WithMany(p => p.PromptsFavoritos)
                 .UsingEntity<Dictionary<string, object>>(
                     "Favorito",
                     r => r.HasOne<Usuario>().WithMany()

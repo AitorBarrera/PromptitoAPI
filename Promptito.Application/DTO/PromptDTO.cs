@@ -20,15 +20,5 @@ namespace Promptito.Application.DTO
         public DateOnly FechaCreacion { get; set; }
 
         public int UsuarioCreadorId { get; set; }
-
-        public virtual ICollection<PromptVarianteDTO> PromptVariantes { get; set; } = new List<PromptVarianteDTO>();
-
-        public virtual UsuarioDTO UsuarioCreador { get; set; } = null!;     
-
-        public virtual ICollection<LlmDTO> Llms { get; set; } = new List<LlmDTO>();
-
-        public virtual ICollection<TematicaDTO> Tematicas { get; set; } = new List<TematicaDTO>();
-
-        public virtual ICollection<UsuarioDTO> Usuarios { get; set; } = new List<UsuarioDTO>();
     }
 }

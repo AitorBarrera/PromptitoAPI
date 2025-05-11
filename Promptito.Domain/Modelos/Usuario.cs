@@ -17,7 +17,7 @@ public partial class Usuario
 
     public bool EstaActivo { get; set; }
 
-    public virtual ICollection<Prompt> PromptsNavigation { get; set; } = new List<Prompt>();
+    public virtual ICollection<Prompt> PromptsCreados { get; set; } = new List<Prompt>();
 
-    public virtual ICollection<Prompt> Prompts { get; set; } = new List<Prompt>();
+    public virtual ICollection<Prompt> PromptsFavoritos { get; set; } = new List<Prompt>();
 }

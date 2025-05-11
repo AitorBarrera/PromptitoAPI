@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Promptito.Application.DTO;
 using Promptito.Application.Interfaces;
+using Promptito.Application.NavegacionDTO;
 using Promptito.Domain.Modelos;
 using Promptito.Persistance;
 
@@ -22,17 +23,27 @@ namespace Promptito.API.Controladores
         }
 
         [HttpGet("", Name = "GetPrompts")]
-        public async Task<ActionResult<List<PromptDTO>>> GetAllPrompts()
+        public async Task<ActionResult<List<PromptMappedDTO>>> GetAllPrompts()
         {
             return await _context.Prompts
-                .ProjectTo<PromptDTO>(_mapper.ConfigurationProvider)
+                .ProjectTo<PromptMappedDTO>(_mapper.ConfigurationProvider)
                 .ToListAsync();
         }
 
-        [HttpGet("/{id}", Name = "GetPromptById")]
-        public async Task<ActionResult<Prompt>> GetPromptById(int id)
+        [HttpGet("{id}", Name = "GetPromptById")]
+        public async Task<ActionResult<PromptMappedDTO>> GetPromptById([FromRoute] int id)
         {
-            return await _context.Prompts.FindAsync(id);
+            PromptMappedDTO dto = await _context.Prompts
+            .Where(p => p.Id == id)
+            .ProjectTo<PromptMappedDTO>(_mapper.ConfigurationProvider)
+            .FirstAsync();
+
+            if (dto == null)
+            {
+                return NotFound();
+            }
+
+            return dto;
         }
     }
 }
