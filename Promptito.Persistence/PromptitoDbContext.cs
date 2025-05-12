@@ -6,8 +6,7 @@ using Promptito.Application.Interfaces;
 
 namespace Promptito.Persistance;
 
-public partial class PromptitoDbContext : DbContext, IPromptitoDbContext
-{
+public partial class PromptitoDbContext : DbContext, IPromptitoDbContext{
     public PromptitoDbContext()
     {
     }
@@ -31,6 +30,15 @@ public partial class PromptitoDbContext : DbContext, IPromptitoDbContext
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        return await base.SaveChangesAsync(cancellationToken);
+    }
+
+    public override DbSet<TEntity> Set<TEntity>() where TEntity : class
+    {
+        return base.Set<TEntity>();
+    }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseNpgsql("Name=ConnectionStrings:PromptitoDbConnection");
 

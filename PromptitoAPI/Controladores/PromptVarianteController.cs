@@ -6,26 +6,46 @@ using Promptito.Domain.Modelos;
 namespace Promptito.API.Controladores
 {
     [ApiController]
-    [Route("promptVariantes")]
-    public class PromptVarianteController : ControllerBase
+    [Route("")]
+    public class PromptVarianteController : ControllerBase, IGenericController<PromptVariante, PromptVarianteDTO>
     {
-        private readonly IPromptitoDbContext _context;
-        public PromptVarianteController(IPromptitoDbContext context)
+        private readonly IServicioCRUD<PromptVariante, PromptVarianteDTO> _servicioCRUD;
+
+        public PromptVarianteController(IServicioCRUD<PromptVariante, PromptVarianteDTO> servicioCRUD)
         {
-            _context = context;
+            _servicioCRUD = servicioCRUD;
         }
 
-        [HttpGet("", Name = "GetPromptVariantes")]
-        public async Task<ActionResult<List<PromptVariante>>> GetAllPromptVariantes()
+
+        [HttpGet("[controller]", Name = "GetAllPromptVariante")]
+        public async Task<ActionResult<List<PromptVariante>>> GetAllController()
         {
-            return await _context.PromptVariantes
-                .ToListAsync();
+            return await _servicioCRUD.GetAll();
         }
 
-        [HttpGet("{id}", Name = "GetPromptVarianteById")]
-        public async Task<ActionResult<PromptVariante>> GetPromptVarianteById(int id)
+
+        [HttpGet("[controller]/{id}", Name = "GetPromptVarianteById")]
+        public async Task<ActionResult<PromptVariante>> GetByIdController(int id)
         {
-            return await _context.PromptVariantes.FindAsync(id);
+            return await _servicioCRUD.GetById(id);
+        }
+
+        [HttpPost("[controller]", Name = "PostPromptVariante")]
+        public async Task<ActionResult<PromptVarianteDTO>> PostController(PromptVarianteDTO dto)
+        {
+            return await _servicioCRUD.Post(dto);
+        }
+
+        [HttpPut("[controller]", Name = "UpdatePromptVariante")]
+        public async Task<ActionResult<PromptVarianteDTO>> UpdateController(PromptVarianteDTO dto)
+        {
+            return await _servicioCRUD.Update(dto);
+        }
+
+        [HttpDelete("[controller]", Name = "DeletePromptVariante")]
+        public async Task<ActionResult<string?>> DeleteController(int id)
+        {
+            return await _servicioCRUD.Delete(id);
         }
     }
 }

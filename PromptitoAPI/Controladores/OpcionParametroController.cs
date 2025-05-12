@@ -6,26 +6,46 @@ using Promptito.Domain.Modelos;
 namespace Promptito.API.Controladores
 {
     [ApiController]
-    [Route("opcionParametros")]
-    public class OpcionParametroController : ControllerBase
+    [Route("")]
+    public class OpcionParametroController : ControllerBase, IGenericController<OpcionParametro, OpcionParametroDTO>
     {
-        private readonly IPromptitoDbContext _context;
-        public OpcionParametroController(IPromptitoDbContext context)
+        private readonly IServicioCRUD<OpcionParametro, OpcionParametroDTO> _servicioCRUD;
+
+        public OpcionParametroController(IServicioCRUD<OpcionParametro, OpcionParametroDTO> servicioCRUD)
         {
-            _context = context;
+            _servicioCRUD = servicioCRUD;
         }
 
-        [HttpGet("", Name = "GetOpcionParametros")]
-        public async Task<ActionResult<List<OpcionParametro>>> GetAllOpcionParametros()
+
+        [HttpGet("[controller]", Name = "GetAllOpcionParametro")]
+        public async Task<ActionResult<List<OpcionParametro>>> GetAllController()
         {
-            return await _context.OpcionParametros
-                .ToListAsync();
+            return await _servicioCRUD.GetAll();
         }
 
-        [HttpGet("{id}", Name = "GetOpcionParametroById")]
-        public async Task<ActionResult<OpcionParametro>> GetOpcionParametroById(int id)
+
+        [HttpGet("[controller]/{id}", Name = "GetOpcionParametroById")]
+        public async Task<ActionResult<OpcionParametro>> GetByIdController(int id)
         {
-            return await _context.OpcionParametros.FindAsync(id);
+            return await _servicioCRUD.GetById(id);
+        }
+
+        [HttpPost("[controller]", Name = "PostOpcionParametro")]
+        public async Task<ActionResult<OpcionParametroDTO>> PostController(OpcionParametroDTO dto)
+        {
+            return await _servicioCRUD.Post(dto);
+        }
+
+        [HttpPut("[controller]", Name = "UpdateOpcionParametro")]
+        public async Task<ActionResult<OpcionParametroDTO>> UpdateController(OpcionParametroDTO dto)
+        {
+            return await _servicioCRUD.Update(dto);
+        }
+
+        [HttpDelete("[controller]", Name = "DeleteOpcionParametro")]
+        public async Task<ActionResult<string?>> DeleteController(int id)
+        {
+            return await _servicioCRUD.Delete(id);
         }
     }
 }

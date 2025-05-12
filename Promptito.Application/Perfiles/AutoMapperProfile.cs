@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Promptito.Application.DTO;
+using Promptito.Application.DTO_Post;
 using Promptito.Domain.Modelos;
 
 namespace Promptito.Application.Perfiles
@@ -8,13 +9,15 @@ namespace Promptito.Application.Perfiles
     {
         public AutoMapperProfile()
         {
-            CreateMap<Prompt, PromptDTO>()
-                .ForMember(dest => dest.PromptVariantes, opt => opt.MapFrom(src => src.PromptVariantes))
-                .ForMember(dest => dest.UsuarioCreador, opt => opt.MapFrom(src => src.UsuarioCreador))
-                .ForMember(dest => dest.Llms, opt => opt.MapFrom(src => src.Llms))
-                .ForMember(dest => dest.Tematicas, opt => opt.MapFrom(src => src.Tematicas))
-                .ForMember(dest => dest.Usuarios, opt => opt.MapFrom(src => src.Usuarios));
+            CreateMap<Prompt, Prompt>();
+            CreateMap<Llm, Llm>();
+            CreateMap<OpcionParametro, OpcionParametro>();
+            CreateMap<Parametro, Parametro>();
+            CreateMap<PromptVariante, PromptVariante>();
+            CreateMap<Tematica, Tematica>();
+            CreateMap<Usuario, Usuario>();
 
+            CreateMap<Prompt, PromptDTO>();
             CreateMap<Llm, LlmDTO>();
             CreateMap<OpcionParametro, OpcionParametroDTO>();
             CreateMap<Parametro, ParametroDTO>();
@@ -22,8 +25,14 @@ namespace Promptito.Application.Perfiles
             CreateMap<Tematica, TematicaDTO>();
             CreateMap<Usuario, UsuarioDTO>();
 
-            //CreateMap<PromptDTO, Prompt>();
-            //CreateMap<LlmDTO, Llm>();
+
+            CreateMap<PromptDTO, Prompt>();
+            CreateMap<LlmDTO, Llm>();
+            CreateMap<OpcionParametroDTO, OpcionParametro>();
+            CreateMap<ParametroDTO, Parametro>();
+            CreateMap<PromptVarianteDTO, PromptVariante>();
+            CreateMap<TematicaDTO, Tematica>();
+            CreateMap<UsuarioDTO, Usuario>();
         }
     }
 }
