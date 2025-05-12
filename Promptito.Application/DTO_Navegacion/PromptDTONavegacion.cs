@@ -9,7 +9,7 @@ using Promptito.Domain.Modelos;
 
 namespace Promptito.Application.NavegacionDTO
 {
-    public class PromptMappedDTO
+    public class PromptDTONavegacion
     {
         public int Id { get; set; }
 

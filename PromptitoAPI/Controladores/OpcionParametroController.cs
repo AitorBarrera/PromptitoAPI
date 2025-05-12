@@ -1,37 +1,48 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Promptito.Application.DTO_Post;
 using Promptito.Application.Interfaces;
+using Promptito.Application.NavegacionDTO;
 using Promptito.Domain.Modelos;
 
 namespace Promptito.API.Controladores
 {
     [ApiController]
     [Route("")]
-    public class OpcionParametroController : ControllerBase, IGenericController<OpcionParametro, OpcionParametroDTO>
+    public class OpcionParametroController : ControllerBase, IGenericController<OpcionParametro, OpcionParametroDTO, OpcionParametroDTONavegacion, OpcionParametroDTOPost>
     {
-        private readonly IServicioCRUD<OpcionParametro, OpcionParametroDTO> _servicioCRUD;
+        private readonly IServicioCRUD<OpcionParametro, OpcionParametroDTO, OpcionParametroDTONavegacion, OpcionParametroDTOPost> _servicioCRUD;
 
-        public OpcionParametroController(IServicioCRUD<OpcionParametro, OpcionParametroDTO> servicioCRUD)
+        public OpcionParametroController(IServicioCRUD<OpcionParametro, OpcionParametroDTO, OpcionParametroDTONavegacion, OpcionParametroDTOPost> servicioCRUD)
         {
             _servicioCRUD = servicioCRUD;
         }
-
-
         [HttpGet("[controller]", Name = "GetAllOpcionParametro")]
-        public async Task<ActionResult<List<OpcionParametro>>> GetAllController()
+        public async Task<ActionResult<List<OpcionParametroDTONavegacion>>> GetAllController()
         {
             return await _servicioCRUD.GetAll();
         }
 
+        [HttpGet("[controller]/dto", Name = "GetAllDTOOpcionParametro")]
+        public async Task<ActionResult<List<OpcionParametroDTO>>> GetAllDTOController()
+        {
+            return await _servicioCRUD.GetAllDTO();
+        }
 
         [HttpGet("[controller]/{id}", Name = "GetOpcionParametroById")]
-        public async Task<ActionResult<OpcionParametro>> GetByIdController(int id)
+        public async Task<ActionResult<OpcionParametroDTONavegacion>> GetByIdController(int id)
         {
             return await _servicioCRUD.GetById(id);
         }
 
+        [HttpGet("[controller]/dto/{id}", Name = "GetOpcionParametroDTOById")]
+        public async Task<ActionResult<OpcionParametroDTO>> GetByIdDTOController(int id)
+        {
+            return await _servicioCRUD.GetByIdDTO(id);
+        }
+
         [HttpPost("[controller]", Name = "PostOpcionParametro")]
-        public async Task<ActionResult<OpcionParametroDTO>> PostController(OpcionParametroDTO dto)
+        public async Task<ActionResult<OpcionParametroDTO>> PostController(OpcionParametroDTOPost dto)
         {
             return await _servicioCRUD.Post(dto);
         }

@@ -11,7 +11,5 @@ public partial class ParametroDTOPost
 
     public string? ValorPredeterminado { get; set; }
 
-    public int Id { get; set; }
-
     public int PromptVarianteId { get; set; }
 }

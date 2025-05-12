@@ -10,6 +10,7 @@ namespace Promptito.Application.Perfiles
     {
         public AutoMapperProfile()
         {
+            //Mappings oara DTOs en Get mothods SIN propiedades de navegacion 
             CreateMap<Llm, LlmDTO>();
             CreateMap<OpcionParametro, OpcionParametroDTO>();
             CreateMap<Parametro, ParametroDTO>();
@@ -19,31 +20,24 @@ namespace Promptito.Application.Perfiles
             CreateMap<Usuario, UsuarioDTO>();
 
 
-
-            CreateMap<Llm, LlmMappedDTO>();
-            CreateMap<OpcionParametro, OpcionParametroMappedDTO>();
-            CreateMap<Parametro, ParametroMappedDTO>();
-
-            CreateMap<Prompt, PromptMappedDTO>()
-                .ForMember(dest => dest.PromptVariantes, opt => opt.MapFrom(src => src.PromptVariantes))
-                .ForMember(dest => dest.UsuarioCreador, opt => opt.MapFrom(src => src.UsuarioCreador))
-                .ForMember(dest => dest.Llms, opt => opt.MapFrom(src => src.Llms))
-                .ForMember(dest => dest.Tematicas, opt => opt.MapFrom(src => src.Tematicas))
-                .ForMember(dest => dest.EnFavoritosDe, opt => opt.MapFrom(src => src.EnFavoritosDe));
-
-            CreateMap<PromptVariante, PromptVarianteMappedDTO>();
-            CreateMap<Tematica, TematicaMappedDTO>();
-            CreateMap<Usuario, UsuarioMappedDTO>()
-                .ForMember(dest => dest.PromptsCreados, opt => opt.MapFrom(src => src.PromptsCreados));
+            //Mappings para DTOs en Get mothods CON propiedades de navegacion 
+            CreateMap<Llm, LlmDTONavegacion>();
+            CreateMap<OpcionParametro, OpcionParametroDTONavegacion>();
+            CreateMap<Parametro, ParametroDTONavegacion>();
+            CreateMap<Prompt, PromptDTONavegacion>();
+            CreateMap<PromptVariante, PromptVarianteDTONavegacion>();
+            CreateMap<Tematica, TematicaDTONavegacion>();
+            CreateMap<Usuario, UsuarioDTONavegacion>();
 
 
-            CreateMap<PromptDTO, Prompt>();
-            CreateMap<LlmDTO, Llm>();
-            CreateMap<OpcionParametroDTO, OpcionParametro>();
-            CreateMap<ParametroDTO, Parametro>();
-            CreateMap<PromptVarianteDTO, PromptVariante>();
-            CreateMap<TematicaDTO, Tematica>();
-            CreateMap<UsuarioDTO, Usuario>();
+            //Mappings para DTOs de agregacion en los metodos POST y PUT
+            CreateMap<PromptDTOPost, Prompt>();
+            CreateMap<LlmDTOPost, Llm>();
+            CreateMap<OpcionParametroDTOPost, OpcionParametro>();
+            CreateMap<ParametroDTOPost, Parametro>();
+            CreateMap<PromptVarianteDTOPost, PromptVariante>();
+            CreateMap<TematicaDTOPost, Tematica>();
+            CreateMap<UsuarioDTOPost, Usuario>();
         }
     }
 }

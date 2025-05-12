@@ -19,7 +19,11 @@ namespace Promptito.Application.Interfaces
     {
         Task<ActionResult<List<TDto_Navegacion>>> GetAllController();
 
+        Task<ActionResult<List<TDto>>> GetAllDTOController();
+
         Task<ActionResult<TDto_Navegacion>> GetByIdController(int id);
+
+        Task<ActionResult<TDto>> GetByIdDTOController(int id);
 
         Task<ActionResult<TDto>> PostController(TDto_Post dto);
 

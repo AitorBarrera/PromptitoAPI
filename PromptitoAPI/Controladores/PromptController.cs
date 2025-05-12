@@ -12,31 +12,41 @@ namespace Promptito.API.Controladores
 {
     [ApiController]
     [Route("")]
-    public class PromptController : ControllerBase, IGenericController<Prompt, PromptDTO>
+    public class PromptController : ControllerBase, IGenericController<Prompt, PromptDTO, PromptDTONavegacion, PromptDTOPost>
     {
-        private readonly IServicioCRUD<Prompt, PromptDTO> _servicioCRUD;
+        private readonly IServicioCRUD<Prompt, PromptDTO, PromptDTONavegacion, PromptDTOPost> _servicioCRUD;
 
-        public PromptController(IServicioCRUD<Prompt, PromptDTO> servicioCRUD)
+        public PromptController(IServicioCRUD<Prompt, PromptDTO, PromptDTONavegacion, PromptDTOPost> servicioCRUD)
         {
             _servicioCRUD = servicioCRUD;
         }
 
-
         [HttpGet("[controller]", Name = "GetAllPrompt")]
-        public async Task<ActionResult<List<Prompt>>> GetAllController()
+        public async Task<ActionResult<List<PromptDTONavegacion>>> GetAllController()
         {
             return await _servicioCRUD.GetAll();
         }
 
+        [HttpGet("[controller]/dto", Name = "GetAllDTOPrompt")]
+        public async Task<ActionResult<List<PromptDTO>>> GetAllDTOController()
+        {
+            return await _servicioCRUD.GetAllDTO();
+        }
 
         [HttpGet("[controller]/{id}", Name = "GetPromptById")]
-        public async Task<ActionResult<Prompt>> GetByIdController(int id)
+        public async Task<ActionResult<PromptDTONavegacion>> GetByIdController(int id)
         {
             return await _servicioCRUD.GetById(id);
         }
 
+        [HttpGet("[controller]/dto/{id}", Name = "GetPromptDTOById")]
+        public async Task<ActionResult<PromptDTO>> GetByIdDTOController(int id)
+        {
+            return await _servicioCRUD.GetByIdDTO(id);
+        }
+
         [HttpPost("[controller]", Name = "PostPrompt")]
-        public async Task<ActionResult<PromptDTO>> PostController(PromptDTO dto)
+        public async Task<ActionResult<PromptDTO>> PostController(PromptDTOPost dto)
         {
             return await _servicioCRUD.Post(dto);
         }

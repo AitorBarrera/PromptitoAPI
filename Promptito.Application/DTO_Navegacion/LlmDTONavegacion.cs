@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Promptito.Application.DTO;
 using Promptito.Domain.Modelos;
 
 namespace Promptito.Application.NavegacionDTO;
 
-public partial class LlmMappedDTO
+public partial class LlmDTONavegacion
 {
     public int Id { get; set; }
 
@@ -12,5 +13,5 @@ public partial class LlmMappedDTO
 
     public string Version { get; set; } = null!;
 
-    public virtual ICollection<Prompt> Prompts { get; set; } = new List<Prompt>();
+    public virtual ICollection<PromptDTO> Prompts { get; set; } = new List<PromptDTO>();
 }

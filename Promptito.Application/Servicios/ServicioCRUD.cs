@@ -27,9 +27,15 @@ namespace Promptito.Application.Servicios
                 .ProjectTo<TDto_Navegacion>(_mapper.ConfigurationProvider)
                 .ToListAsync();
         }
+        public async Task<List<TDto>> GetAllDTO()
+        {
+            return await _context.Set<TEntity>()
+                .ProjectTo<TDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+        }
 
         public async Task<TDto_Navegacion> GetById(int id)
-    {
+        {
             TEntity? entity = await _context.Set<TEntity>().FindAsync(id);
 
             if (entity == null)
@@ -38,6 +44,18 @@ namespace Promptito.Application.Servicios
             }
 
             return _mapper.Map<TDto_Navegacion>(entity);
+        }
+
+        public async Task<TDto> GetByIdDTO(int id)
+        {
+            TEntity? entity = await _context.Set<TEntity>().FindAsync(id);
+
+            if (entity == null)
+            {
+                throw new KeyNotFoundException($"No se encontró la entidad con id {id}.");
+            }
+
+            return _mapper.Map<TDto>(entity);
         }
 
         public async Task<TDto> Post(TDto_Post dto)

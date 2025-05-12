@@ -15,7 +15,7 @@ namespace Cartas.Application
             //    configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
             //});
 
-            services.AddScoped(typeof(IServicioCRUD<,>), typeof(ServicioCRUD<,>));
+            services.AddScoped(typeof(IServicioCRUD<,,,>), typeof(ServicioCRUD<,,,>));
 
             return services;
         }

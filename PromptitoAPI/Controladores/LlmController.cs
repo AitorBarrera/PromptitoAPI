@@ -3,6 +3,7 @@ using Promptito.Application.Interfaces;
 using Promptito.Domain.Modelos;
 using Microsoft.EntityFrameworkCore;
 using Promptito.Application.DTO_Post;
+using Promptito.Application.NavegacionDTO;
 
 namespace Promptito.API.Controladores
 {
@@ -23,10 +24,22 @@ namespace Promptito.API.Controladores
             return await _servicioCRUD.GetAll();
         }
 
+        [HttpGet("[controller]/dto", Name = "GetAllDTOLlm")]
+        public async Task<ActionResult<List<LlmDTO>>> GetAllDTOController()
+        {
+            return await _servicioCRUD.GetAllDTO();
+        }
+
         [HttpGet("[controller]/{id}", Name = "GetLlmById")]
         public async Task<ActionResult<LlmDTONavegacion>> GetByIdController(int id)
         {
             return await _servicioCRUD.GetById(id);
+        }
+
+        [HttpGet("[controller]/dto/{id}", Name = "GetLlmDTOById")]
+        public async Task<ActionResult<LlmDTO>> GetByIdDTOController(int id)
+        {
+            return await _servicioCRUD.GetByIdDTO(id);
         }
 
         [HttpPost("[controller]", Name = "PostLlm")]

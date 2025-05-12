@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Promptito.Application.DTO;
 
 namespace Promptito.Domain.Modelos;
 
-public partial class UsuarioMappedDTO
+public partial class UsuarioDTONavegacion
 {
     public int Id { get; set; }
 
@@ -17,7 +18,7 @@ public partial class UsuarioMappedDTO
 
     public bool EstaActivo { get; set; }
 
-    public virtual ICollection<Prompt> PromptsCreados { get; set; } = new List<Prompt>();
+    public virtual ICollection<PromptDTO> PromptsCreados { get; set; } = new List<PromptDTO>();
 
-    public virtual ICollection<Prompt> PromptsFavoritos { get; set; } = new List<Prompt>();
+    public virtual ICollection<PromptDTO> PromptsFavoritos { get; set; } = new List<PromptDTO>();
 }

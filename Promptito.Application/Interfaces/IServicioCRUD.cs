@@ -6,7 +6,11 @@ namespace Promptito.Application.Interfaces
     {
         Task<List<TDto_Navegacion>> GetAll();
 
+        Task<List<TDto>> GetAllDTO();
+
         Task<TDto_Navegacion?> GetById(int id);
+
+        Task<TDto> GetByIdDTO(int id);
 
         Task<TDto> Post(TDto_Post dto);
 
