@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Promptito.Application.DTO;
 using Promptito.Application.NavegacionDTO;
+using Promptito.Application.DTO_Post;
 using Promptito.Domain.Modelos;
 
 namespace Promptito.Application.Perfiles
@@ -35,8 +36,14 @@ namespace Promptito.Application.Perfiles
             CreateMap<Usuario, UsuarioMappedDTO>()
                 .ForMember(dest => dest.PromptsCreados, opt => opt.MapFrom(src => src.PromptsCreados));
 
-            //CreateMap<PromptDTO, Prompt>();
-            //CreateMap<LlmDTO, Llm>();
+
+            CreateMap<PromptDTO, Prompt>();
+            CreateMap<LlmDTO, Llm>();
+            CreateMap<OpcionParametroDTO, OpcionParametro>();
+            CreateMap<ParametroDTO, Parametro>();
+            CreateMap<PromptVarianteDTO, PromptVariante>();
+            CreateMap<TematicaDTO, Tematica>();
+            CreateMap<UsuarioDTO, Usuario>();
         }
     }
 }

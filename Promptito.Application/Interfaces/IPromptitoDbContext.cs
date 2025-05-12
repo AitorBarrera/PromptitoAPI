@@ -19,5 +19,9 @@ namespace Promptito.Application.Interfaces
         public  DbSet<Tematica> Tematicas { get; set; }
 
         public  DbSet<Usuario> Usuarios { get; set; }
+
+        public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+
+        public DbSet<TEntity> Set<TEntity>() where TEntity : class;
     }
 }

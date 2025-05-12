@@ -3,47 +3,54 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Promptito.Application.DTO;
+using Promptito.Application.DTO_Post;
 using Promptito.Application.Interfaces;
 using Promptito.Application.NavegacionDTO;
 using Promptito.Domain.Modelos;
-using Promptito.Persistance;
 
 namespace Promptito.API.Controladores
 {
     [ApiController]
-    [Route("prompts")]
-    public class PromptController : ControllerBase
+    [Route("")]
+    public class PromptController : ControllerBase, IGenericController<Prompt, PromptDTO>
     {
-        private readonly IPromptitoDbContext _context;
-        private readonly IMapper _mapper;
-        public PromptController(IPromptitoDbContext context, IMapper mapper)
+        private readonly IServicioCRUD<Prompt, PromptDTO> _servicioCRUD;
+
+        public PromptController(IServicioCRUD<Prompt, PromptDTO> servicioCRUD)
         {
-            _context = context;
-            _mapper = mapper;
+            _servicioCRUD = servicioCRUD;
         }
 
-        [HttpGet("", Name = "GetPrompts")]
-        public async Task<ActionResult<List<PromptMappedDTO>>> GetAllPrompts()
+
+        [HttpGet("[controller]", Name = "GetAllPrompt")]
+        public async Task<ActionResult<List<Prompt>>> GetAllController()
         {
-            return await _context.Prompts
-                .ProjectTo<PromptMappedDTO>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+            return await _servicioCRUD.GetAll();
         }
 
-        [HttpGet("{id}", Name = "GetPromptById")]
-        public async Task<ActionResult<PromptMappedDTO>> GetPromptById([FromRoute] int id)
+
+        [HttpGet("[controller]/{id}", Name = "GetPromptById")]
+        public async Task<ActionResult<Prompt>> GetByIdController(int id)
         {
-            PromptMappedDTO dto = await _context.Prompts
-            .Where(p => p.Id == id)
-            .ProjectTo<PromptMappedDTO>(_mapper.ConfigurationProvider)
-            .FirstAsync();
+            return await _servicioCRUD.GetById(id);
+        }
 
-            if (dto == null)
-            {
-                return NotFound();
-            }
+        [HttpPost("[controller]", Name = "PostPrompt")]
+        public async Task<ActionResult<PromptDTO>> PostController(PromptDTO dto)
+        {
+            return await _servicioCRUD.Post(dto);
+        }
 
-            return dto;
+        [HttpPut("[controller]", Name = "UpdatePrompt")]
+        public async Task<ActionResult<PromptDTO>> UpdateController(PromptDTO dto)
+        {
+            return await _servicioCRUD.Update(dto);
+        }
+
+        [HttpDelete("[controller]", Name = "DeletePrompt")]
+        public async Task<ActionResult<string?>> DeleteController(int id)
+        {
+            return await _servicioCRUD.Delete(id);
         }
     }
 }

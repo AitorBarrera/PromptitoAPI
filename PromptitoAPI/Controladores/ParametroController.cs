@@ -6,26 +6,46 @@ using Promptito.Domain.Modelos;
 namespace Promptito.API.Controladores
 {
     [ApiController]
-    [Route("parametros")]
-    public class ParametroController : ControllerBase
+    [Route("")]
+    public class ParametroController : ControllerBase, IGenericController<Parametro, ParametroDTO>
     {
-        private readonly IPromptitoDbContext _context;
-        public ParametroController(IPromptitoDbContext context)
+        private readonly IServicioCRUD<Parametro, ParametroDTO> _servicioCRUD;
+
+        public ParametroController(IServicioCRUD<Parametro, ParametroDTO> servicioCRUD)
         {
-            _context = context;
+            _servicioCRUD = servicioCRUD;
         }
 
-        [HttpGet("", Name = "GetParametros")]
-        public async Task<ActionResult<List<Parametro>>> GetAllParametros()
+
+        [HttpGet("[controller]", Name = "GetAllParametro")]
+        public async Task<ActionResult<List<Parametro>>> GetAllController()
         {
-            return await _context.Parametros
-                .ToListAsync();
+            return await _servicioCRUD.GetAll();
         }
 
-        [HttpGet("{id}", Name = "GetParametroById")]
-        public async Task<ActionResult<Parametro>> GetParametroById(int id)
+
+        [HttpGet("[controller]/{id}", Name = "GetParametroById")]
+        public async Task<ActionResult<Parametro>> GetByIdController(int id)
         {
-            return await _context.Parametros.FindAsync(id);
+            return await _servicioCRUD.GetById(id);
+        }
+
+        [HttpPost("[controller]", Name = "PostParametro")]
+        public async Task<ActionResult<ParametroDTO>> PostController(ParametroDTO dto)
+        {
+            return await _servicioCRUD.Post(dto);
+        }
+
+        [HttpPut("[controller]", Name = "UpdateParametro")]
+        public async Task<ActionResult<ParametroDTO>> UpdateController(ParametroDTO dto)
+        {
+            return await _servicioCRUD.Update(dto);
+        }
+
+        [HttpDelete("[controller]", Name = "DeleteParametro")]
+        public async Task<ActionResult<string?>> DeleteController(int id)
+        {
+            return await _servicioCRUD.Delete(id);
         }
     }
 }
