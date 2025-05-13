@@ -15,10 +15,18 @@ namespace Promptito.API.Controladores
     public class PromptController : ControllerBase, IGenericController<Prompt, PromptDTO, PromptDTONavegacion, PromptDTOPost>
     {
         private readonly IServicioCRUD<Prompt, PromptDTO, PromptDTONavegacion, PromptDTOPost> _servicioCRUD;
+        private readonly IServicioPromptLlm _servicioPromptLlm;
+        private readonly IServicioPromptTematica _servicioPromptTematica;
 
-        public PromptController(IServicioCRUD<Prompt, PromptDTO, PromptDTONavegacion, PromptDTOPost> servicioCRUD)
+
+        public PromptController(
+            IServicioCRUD<Prompt, PromptDTO, PromptDTONavegacion, PromptDTOPost> servicioCRUD,
+            IServicioPromptLlm servicioPromptLlm,
+            IServicioPromptTematica servicioPromptTematica)
         {
             _servicioCRUD = servicioCRUD;
+            _servicioPromptLlm = servicioPromptLlm;
+            _servicioPromptTematica = servicioPromptTematica;
         }
 
         [HttpGet("[controller]", Name = "GetAllPrompt")]
@@ -61,6 +69,30 @@ namespace Promptito.API.Controladores
         public async Task<ActionResult<string?>> DeleteController(int id)
         {
             return await _servicioCRUD.Delete(id);
+        }
+
+        [HttpPost("[controller]/addLlm", Name = "AddLlm")]
+        public async Task<ActionResult<PromptDTONavegacion>> AddLlmToPrompt([FromQuery] int promptId, int llmId)
+        {
+            return await _servicioPromptLlm.AddLlmToPrompt(promptId, llmId);
+        }
+
+        [HttpDelete("[controller]/RemoveLlm", Name = "RemoveLlm")]
+        public async Task<ActionResult<string>> RemoveLlmFromPrompt([FromQuery] int promptId, int llmId)
+        {
+            return await _servicioPromptLlm.RemoveLlmFromPrompt(promptId, llmId);
+        }
+
+        [HttpPost("[controller]/addTematica", Name = "AddTematica")]
+        public async Task<ActionResult<PromptDTONavegacion>> AddTematicaToPrompt([FromQuery] int promptId, int TematicaId)
+        {
+            return await _servicioPromptTematica.AddTematicaToPrompt(promptId, TematicaId);
+        }
+
+        [HttpDelete("[controller]/RemoveTematica", Name = "RemoveTematica")]
+        public async Task<ActionResult<string>> RemoveTematicaFromPrompt([FromQuery] int promptId, int TematicaId)
+        {
+            return await _servicioPromptTematica.RemoveTematicaFromPrompt(promptId, TematicaId);
         }
     }
 }

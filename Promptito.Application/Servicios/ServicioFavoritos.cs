@@ -25,7 +25,7 @@ namespace Promptito.Application.Servicios
        
         public async Task<ActionResult<UsuarioDTONavegacion>> AddFavorite([FromQuery] int usuarioId, int promptId)
         {
-            Usuario? usuario = await _context.Usuarios.FindAsync(usuarioId);
+            Usuario? usuario = await _context.Usuarios.Where(u => u.Id == usuarioId).Include(u => u.PromptsFavoritos).Select(u => u).SingleOrDefaultAsync();
 
             if (usuario == null)
                 throw new ApiException($"Usuario con ID {usuarioId} no encontrado", 404, "user.not_found");
@@ -36,6 +36,8 @@ namespace Promptito.Application.Servicios
             if (promptToAdd == null)
                 throw new ApiException($"Prompt con ID {promptId} no encontrado.", 404, "promptfavorito.not_found");
 
+            if (usuario.PromptsFavoritos.Contains(promptToAdd)) 
+                throw new ApiException("Este prompt ya esta agregado al usuario como favorito.", 400, "promptfavorite.duplicated");
 
             usuario.PromptsFavoritos.Add(promptToAdd);
             await _context.SaveChangesAsync();
@@ -57,7 +59,7 @@ namespace Promptito.Application.Servicios
                 throw new ApiException($"Prompt con ID {promptId} no encontrado.",404,"promptfavorito.not_found");
 
 
-            usuario.PromptsFavoritos.Remove(promptToRemove);
+            if (!usuario.PromptsFavoritos.Remove(promptToRemove)) throw new ApiException($"Prompt con ID {promptId} no encontrada en el usuario indicado", 404, "prompt.not_found");
             await _context.SaveChangesAsync();
 
             return $"Prompt '{promptToRemove.Titulo}' borrado de favoritos del usuario '{usuario.Nombre}'.";

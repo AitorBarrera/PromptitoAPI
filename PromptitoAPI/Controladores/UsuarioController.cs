@@ -61,18 +61,6 @@ namespace Promptito.API.Controladores
             return await _servicioCRUD.Post(dto);
         }
 
-        [HttpPost("[controller]/addFavorite", Name = "AddFavorite")]
-        public async Task<ActionResult<UsuarioDTONavegacion>> AddFavorite([FromQuery] int usuarioId, int promptId)
-        {
-             return await _servicioFavoritos.AddFavorite(usuarioId, promptId);
-        }
-
-        [HttpDelete("[controller]/RemoveFavorite", Name = "RemoveFavorite")]
-        public async Task<ActionResult<string>> RemoveFavorite([FromQuery] int usuarioId, int promptId)
-        {
-             return await _servicioFavoritos.RemoveFavorite(usuarioId, promptId);
-        }
-
         [HttpPut("[controller]", Name = "UpdateUsuario")]
         public async Task<ActionResult<UsuarioDTO>> UpdateController(UsuarioDTO dto)
         {
@@ -83,6 +71,18 @@ namespace Promptito.API.Controladores
         public async Task<ActionResult<string?>> DeleteController(int id)
         {
             return await _servicioCRUD.Delete(id);
+        }
+
+        [HttpPost("[controller]/addFavorite", Name = "AddFavorite")]
+        public async Task<ActionResult<UsuarioDTONavegacion>> AddFavorite([FromQuery] int usuarioId, int promptId)
+        {
+            return await _servicioFavoritos.AddFavorite(usuarioId, promptId);
+        }
+
+        [HttpDelete("[controller]/RemoveFavorite", Name = "RemoveFavorite")]
+        public async Task<ActionResult<string>> RemoveFavorite([FromQuery] int usuarioId, int promptId)
+        {
+            return await _servicioFavoritos.RemoveFavorite(usuarioId, promptId);
         }
     }
 }
