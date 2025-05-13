@@ -4,6 +4,8 @@ using Promptito.Persistence;
 using Promptito.Application.Interfaces;
 using Promptito.Application.Perfiles;
 using Promptito.Application.Servicios;
+using Auth0.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 
 var builder = WebApplication.CreateBuilder(args);

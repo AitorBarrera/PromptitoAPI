@@ -1,5 +1,7 @@
-﻿using AutoMapper;
+﻿using System.Security.Claims;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Promptito.Application.DTO;
@@ -10,7 +12,7 @@ using Promptito.Domain.Modelos;
 
 namespace Promptito.API.Controladores
 {
-
+    [Authorize]
     [ApiController]
     [Route("")]
     public class UsuarioController : ControllerBase, IGenericController<Usuario, UsuarioDTO, UsuarioDTONavegacion, UsuarioDTOPost>

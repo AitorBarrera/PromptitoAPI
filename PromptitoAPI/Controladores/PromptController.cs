@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,16 +15,21 @@ namespace Promptito.API.Controladores
     [Route("")]
     public class PromptController : ControllerBase, IGenericController<Prompt, PromptDTO, PromptDTONavegacion, PromptDTOPost>
     {
+        private readonly IPromptitoDbContext _context;
+        private readonly IMapper _mapper;
         private readonly IServicioCRUD<Prompt, PromptDTO, PromptDTONavegacion, PromptDTOPost> _servicioCRUD;
         private readonly IServicioPromptLlm _servicioPromptLlm;
         private readonly IServicioPromptTematica _servicioPromptTematica;
 
-
         public PromptController(
+            IPromptitoDbContext context,
+            IMapper mapper,
             IServicioCRUD<Prompt, PromptDTO, PromptDTONavegacion, PromptDTOPost> servicioCRUD,
             IServicioPromptLlm servicioPromptLlm,
             IServicioPromptTematica servicioPromptTematica)
         {
+            _context = context;
+            _mapper = mapper;
             _servicioCRUD = servicioCRUD;
             _servicioPromptLlm = servicioPromptLlm;
             _servicioPromptTematica = servicioPromptTematica;
@@ -34,6 +40,30 @@ namespace Promptito.API.Controladores
         {
             return await _servicioCRUD.GetAll();
         }
+
+        [HttpGet("[controller]/paginacion", Name = "GetPaginacionPrompt")]
+        public async Task<ActionResult<ObjetoPaginacion<PromptDTONavegacion>>> GetAllPagination([FromQuery] int pagina = 1, [FromQuery] int cantidadPorPagina = 10)
+        {
+            int salto = (pagina - 1) * cantidadPorPagina;
+
+            List<PromptDTONavegacion> listaPrompt = await _context.Prompts
+                .OrderByDescending(p => p.FechaCreacion)
+                .Skip(salto)
+                .Take(cantidadPorPagina)
+                .ProjectTo<PromptDTONavegacion>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            var totalCount = await _context.Prompts.CountAsync();
+
+            return Ok(new ObjetoPaginacion<PromptDTONavegacion>
+            {
+                Datos = listaPrompt,
+                Pagina = pagina,
+                CantidadPorPagina = cantidadPorPagina,
+                CantidadTotal = totalCount
+            });
+        }
+
 
         [HttpGet("[controller]/dto", Name = "GetAllDTOPrompt")]
         public async Task<ActionResult<List<PromptDTO>>> GetAllDTOController()
