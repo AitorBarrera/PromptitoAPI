@@ -1,9 +1,9 @@
 using AutoMapper;
-using Cartas.Application;
-using Cartas.Persistence;
-using Microsoft.OpenApi.Models;
+using Promptito.Application;
+using Promptito.Persistence;
 using Promptito.Application.Interfaces;
 using Promptito.Application.Perfiles;
+using Promptito.Application.Servicios;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -44,6 +44,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseExcepciones();
 //app.UseAuthorization();
 
 app.MapControllers();

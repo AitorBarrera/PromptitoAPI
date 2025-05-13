@@ -3,7 +3,7 @@ using Promptito.Application.Interfaces;
 using Promptito.Application.Servicios;
 using System.Reflection;
 
-namespace Cartas.Application
+namespace Promptito.Application
 {
     //Inyeccion de dependencias para el projecto
     public static class DependencyInjection
@@ -16,6 +16,7 @@ namespace Cartas.Application
             //});
 
             services.AddScoped(typeof(IServicioCRUD<,,,>), typeof(ServicioCRUD<,,,>));
+            services.AddScoped(typeof(IServicioFavoritos), typeof(ServicioFavoritos));
 
             return services;
         }

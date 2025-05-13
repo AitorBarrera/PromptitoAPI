@@ -6,7 +6,7 @@ using Promptito.Application.Interfaces;
 
 namespace Promptito.Application.Servicios
 {
-    public class ServicioCRUD<TEntity, TDto, TDto_Navegacion, TDto_Post> : ControllerBase, IServicioCRUD<TEntity, TDto, TDto_Navegacion, TDto_Post>
+    public class ServicioCRUD<TEntity, TDto, TDto_Navegacion, TDto_Post> : IServicioCRUD<TEntity, TDto, TDto_Navegacion, TDto_Post>
     where TEntity : class
     where TDto : class
     where TDto_Navegacion : class
@@ -95,7 +95,7 @@ namespace Promptito.Application.Servicios
 
             await _context.SaveChangesAsync();
 
-            return $"Prompt con id {id} borrado.";
+            return $"{entity} con id {id} borrado.";
         }
     }
 }

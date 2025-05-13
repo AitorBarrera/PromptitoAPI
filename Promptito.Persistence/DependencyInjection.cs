@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Promptito.Application.Interfaces;
 using Promptito.Persistance;
 
-namespace Cartas.Persistence
+namespace Promptito.Persistence
 {
     public static class DependencyInjection
     {
