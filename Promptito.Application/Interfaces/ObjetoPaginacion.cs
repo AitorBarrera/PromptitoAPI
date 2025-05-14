@@ -16,5 +16,8 @@ namespace Promptito.Application.Interfaces
         public int Pagina { get; set; }
 
         public int CantidadPorPagina { get; set; }
+
+        public int CantidadDePaginas { get; set; }
+
     }
 }

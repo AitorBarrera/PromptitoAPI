@@ -4,6 +4,7 @@ using Promptito.Domain.Modelos;
 using Microsoft.EntityFrameworkCore;
 using Promptito.Application.DTO_Post;
 using Promptito.Application.NavegacionDTO;
+using Promptito.Application.Servicios;
 
 namespace Promptito.API.Controladores
 {
@@ -12,10 +13,12 @@ namespace Promptito.API.Controladores
     public class LlmController : ControllerBase, IGenericController<Llm, LlmDTO, LlmDTONavegacion, LlmDTOPost>
     {
         private readonly IServicioCRUD<Llm, LlmDTO, LlmDTONavegacion, LlmDTOPost> _servicioCRUD;
+        private readonly IServicioNavegacionPorId _servicioNavegacionPorId;
 
-        public LlmController(IServicioCRUD<Llm, LlmDTO, LlmDTONavegacion, LlmDTOPost> servicioCRUD)
+        public LlmController(IServicioCRUD<Llm, LlmDTO, LlmDTONavegacion, LlmDTOPost> servicioCRUD, IServicioNavegacionPorId servicioNavegacionPorId)
         {
             _servicioCRUD = servicioCRUD;
+            _servicioNavegacionPorId = servicioNavegacionPorId;
         }
 
         [HttpGet("[controller]", Name = "GetAllLlm")]
@@ -33,7 +36,7 @@ namespace Promptito.API.Controladores
         [HttpGet("[controller]/{id}", Name = "GetLlmById")]
         public async Task<ActionResult<LlmDTONavegacion>> GetByIdController(int id)
         {
-            return await _servicioCRUD.GetById(id);
+            return await _servicioNavegacionPorId.GetByLlmId(id);
         }
 
         [HttpGet("[controller]/dto/{id}", Name = "GetLlmDTOById")]

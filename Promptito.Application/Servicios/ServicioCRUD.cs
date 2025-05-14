@@ -39,9 +39,7 @@ namespace Promptito.Application.Servicios
             TEntity? entity = await _context.Set<TEntity>().FindAsync(id);
 
             if (entity == null)
-            {
                 throw new KeyNotFoundException($"No se encontró la entidad con id {id}.");
-            }
 
             return _mapper.Map<TDto_Navegacion>(entity);
         }
@@ -51,9 +49,7 @@ namespace Promptito.Application.Servicios
             TEntity? entity = await _context.Set<TEntity>().FindAsync(id);
 
             if (entity == null)
-            {
                 throw new KeyNotFoundException($"No se encontró la entidad con id {id}.");
-            }
 
             return _mapper.Map<TDto>(entity);
         }

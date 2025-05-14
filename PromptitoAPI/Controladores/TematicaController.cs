@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Promptito.Application.DTO_Post;
 using Promptito.Application.Interfaces;
 using Promptito.Application.NavegacionDTO;
+using Promptito.Application.Servicios;
 using Promptito.Domain.Modelos;
 
 namespace Promptito.API.Controladores
@@ -12,10 +13,12 @@ namespace Promptito.API.Controladores
     public class TematicaController : ControllerBase, IGenericController<Tematica, TematicaDTO, TematicaDTONavegacion, TematicaDTOPost>
     {
         private readonly IServicioCRUD<Tematica, TematicaDTO, TematicaDTONavegacion, TematicaDTOPost> _servicioCRUD;
+        private readonly IServicioNavegacionPorId _servicioNavegacionPorId;
 
-        public TematicaController(IServicioCRUD<Tematica, TematicaDTO, TematicaDTONavegacion, TematicaDTOPost> servicioCRUD)
+        public TematicaController(IServicioCRUD<Tematica, TematicaDTO, TematicaDTONavegacion, TematicaDTOPost> servicioCRUD, IServicioNavegacionPorId servicioNavegacionPorId)
         {
             _servicioCRUD = servicioCRUD;
+            _servicioNavegacionPorId = servicioNavegacionPorId;
         }
 
         [HttpGet("[controller]", Name = "GetAllTematica")]
@@ -33,7 +36,7 @@ namespace Promptito.API.Controladores
         [HttpGet("[controller]/{id}", Name = "GetTematicaById")]
         public async Task<ActionResult<TematicaDTONavegacion>> GetByIdController(int id)
         {
-            return await _servicioCRUD.GetById(id);
+            return await _servicioNavegacionPorId.GetByTematicaId(id);
         }
 
         [HttpGet("[controller]/dto/{id}", Name = "GetTematicaDTOById")]

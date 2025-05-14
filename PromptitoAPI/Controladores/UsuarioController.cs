@@ -8,6 +8,7 @@ using Promptito.Application.DTO;
 using Promptito.Application.DTO_Post;
 using Promptito.Application.Interfaces;
 using Promptito.Application.NavegacionDTO;
+using Promptito.Application.Servicios;
 using Promptito.Domain.Modelos;
 
 namespace Promptito.API.Controladores
@@ -18,18 +19,16 @@ namespace Promptito.API.Controladores
     {
         private readonly IServicioCRUD<Usuario, UsuarioDTO, UsuarioDTONavegacion, UsuarioDTOPost> _servicioCRUD;
         private readonly IServicioFavoritos _servicioFavoritos;
-        public readonly IPromptitoDbContext _context;
-        public readonly IMapper _mapper;
+        private readonly IServicioNavegacionPorId _servicioNavegacionPorId;
 
         public UsuarioController(
             IServicioCRUD<Usuario, UsuarioDTO, UsuarioDTONavegacion, UsuarioDTOPost> servicioCRUD,
-            IServicioFavoritos servicioFavoritos,
-            IPromptitoDbContext context, IMapper mapper)
+            IServicioFavoritos servicioFavoritos, 
+            IServicioNavegacionPorId servicioNavegacionPorId)
         {
             _servicioCRUD = servicioCRUD;
             _servicioFavoritos = servicioFavoritos;
-            _context = context;
-            _mapper = mapper;
+            _servicioNavegacionPorId = servicioNavegacionPorId;
         }
 
         [HttpGet("[controller]", Name = "GetAllUsuario")]
@@ -47,7 +46,7 @@ namespace Promptito.API.Controladores
         [HttpGet("[controller]/{id}", Name = "GetUsuarioById")]
         public async Task<ActionResult<UsuarioDTONavegacion>> GetByIdController(int id)
         {
-            return await _servicioCRUD.GetById(id);
+            return await _servicioNavegacionPorId.GetByUsuarioId(id);
         }
 
         [HttpGet("[controller]/dto/{id}", Name = "GetUsuarioDTOById")]

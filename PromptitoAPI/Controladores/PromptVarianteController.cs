@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Promptito.Application.DTO_Post;
 using Promptito.Application.Interfaces;
 using Promptito.Application.NavegacionDTO;
+using Promptito.Application.Servicios;
 using Promptito.Domain.Modelos;
 
 namespace Promptito.API.Controladores
@@ -12,10 +13,12 @@ namespace Promptito.API.Controladores
     public class PromptVarianteController : ControllerBase, IGenericController<PromptVariante, PromptVarianteDTO, PromptVarianteDTONavegacion, PromptVarianteDTOPost>
     {
         private readonly IServicioCRUD<PromptVariante, PromptVarianteDTO, PromptVarianteDTONavegacion, PromptVarianteDTOPost> _servicioCRUD;
+        private readonly IServicioNavegacionPorId _servicioNavegacionPorId;
 
-        public PromptVarianteController(IServicioCRUD<PromptVariante, PromptVarianteDTO, PromptVarianteDTONavegacion, PromptVarianteDTOPost> servicioCRUD)
+        public PromptVarianteController(IServicioCRUD<PromptVariante, PromptVarianteDTO, PromptVarianteDTONavegacion, PromptVarianteDTOPost> servicioCRUD, IServicioNavegacionPorId servicioNavegacionPorId)
         {
             _servicioCRUD = servicioCRUD;
+            _servicioNavegacionPorId = servicioNavegacionPorId;
         }
 
         [HttpGet("[controller]", Name = "GetAllPromptVariante")]
@@ -33,7 +36,7 @@ namespace Promptito.API.Controladores
         [HttpGet("[controller]/{id}", Name = "GetPromptVarianteById")]
         public async Task<ActionResult<PromptVarianteDTONavegacion>> GetByIdController(int id)
         {
-            return await _servicioCRUD.GetById(id);
+            return await _servicioNavegacionPorId.GetByPromptVarianteId(id);
         }
 
         [HttpGet("[controller]/dto/{id}", Name = "GetPromptVarianteDTOById")]

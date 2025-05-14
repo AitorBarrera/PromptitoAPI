@@ -40,6 +40,7 @@ namespace Promptito.API.Middlewares
             {
                 ApiException apiEx => apiEx.StatusCode,
                 ValidationException => StatusCodes.Status400BadRequest,
+                KeyNotFoundException => 404,
                 _ => StatusCodes.Status500InternalServerError
             };
 

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Promptito.Application.DTO_Post;
 using Promptito.Application.Interfaces;
 using Promptito.Application.NavegacionDTO;
+using Promptito.Application.Servicios;
 using Promptito.Domain.Modelos;
 
 namespace Promptito.API.Controladores
@@ -12,10 +13,12 @@ namespace Promptito.API.Controladores
     public class OpcionParametroController : ControllerBase, IGenericController<OpcionParametro, OpcionParametroDTO, OpcionParametroDTONavegacion, OpcionParametroDTOPost>
     {
         private readonly IServicioCRUD<OpcionParametro, OpcionParametroDTO, OpcionParametroDTONavegacion, OpcionParametroDTOPost> _servicioCRUD;
+        private readonly IServicioNavegacionPorId _servicioNavegacionPorId;
 
-        public OpcionParametroController(IServicioCRUD<OpcionParametro, OpcionParametroDTO, OpcionParametroDTONavegacion, OpcionParametroDTOPost> servicioCRUD)
+        public OpcionParametroController(IServicioCRUD<OpcionParametro, OpcionParametroDTO, OpcionParametroDTONavegacion, OpcionParametroDTOPost> servicioCRUD, IServicioNavegacionPorId servicioNavegacionPorId)
         {
             _servicioCRUD = servicioCRUD;
+            _servicioNavegacionPorId = servicioNavegacionPorId;
         }
         [HttpGet("[controller]", Name = "GetAllOpcionParametro")]
         public async Task<ActionResult<List<OpcionParametroDTONavegacion>>> GetAllController()
@@ -32,7 +35,7 @@ namespace Promptito.API.Controladores
         [HttpGet("[controller]/{id}", Name = "GetOpcionParametroById")]
         public async Task<ActionResult<OpcionParametroDTONavegacion>> GetByIdController(int id)
         {
-            return await _servicioCRUD.GetById(id);
+            return await _servicioNavegacionPorId.GetByOpcionParametroId(id);
         }
 
         [HttpGet("[controller]/dto/{id}", Name = "GetOpcionParametroDTOById")]

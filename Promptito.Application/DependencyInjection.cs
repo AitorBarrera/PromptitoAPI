@@ -19,6 +19,8 @@ namespace Promptito.Application
             services.AddScoped(typeof(IServicioFavoritos), typeof(ServicioFavoritos));
             services.AddScoped(typeof(IServicioPromptLlm), typeof(ServicioPromptLlm));
             services.AddScoped(typeof(IServicioPromptTematica), typeof(ServicioPromptTematica));
+            services.AddScoped(typeof(IServicioNavegacionPorId), typeof(ServicioNavegacionPorId));
+            services.AddScoped(typeof(IServicioPaginacion), typeof(ServicioPaginacion));
 
             return services;
         }
