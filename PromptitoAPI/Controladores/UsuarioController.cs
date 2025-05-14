@@ -12,7 +12,6 @@ using Promptito.Domain.Modelos;
 
 namespace Promptito.API.Controladores
 {
-    [Authorize]
     [ApiController]
     [Route("")]
     public class UsuarioController : ControllerBase, IGenericController<Usuario, UsuarioDTO, UsuarioDTONavegacion, UsuarioDTOPost>
