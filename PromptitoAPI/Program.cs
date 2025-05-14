@@ -4,8 +4,7 @@ using Promptito.Persistence;
 using Promptito.Application.Interfaces;
 using Promptito.Application.Perfiles;
 using Promptito.Application.Servicios;
-using Auth0.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Net.Http.Headers;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,11 +18,23 @@ builder.Services.AddSingleton(mapperConfig.CreateMapper());
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 builder.Services.AddApplication();
-builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddPersistence(builder.Configuration);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+            builder =>
+            {
+                builder.WithOrigins("*")
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            });
+});
+
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -44,6 +55,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("AllowSpecificOrigin");
 app.UseRouting();
 
 app.UseExcepciones();
