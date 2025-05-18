@@ -14,5 +14,8 @@ namespace Promptito.Application.Interfaces
         Task<ActionResult<ObjetoPaginacion<PromptDTONavegacion>>> GetAllPromptsPagination(int pagina = 1, int cantidadPorPagina = 10);
 
         Task<ActionResult<ObjetoPaginacion<PromptDTO>>> GetAllPromptsDTOPagination( int pagina = 1, int cantidadPorPagina = 10);
+
+        Task<ActionResult<ObjetoPaginacion<PromptDTONavegacion>>> GetFilteredPromptsPagination(Filtros filtros, int pagina = 1, int cantidadPorPagina = 10);
+
     }
 }
