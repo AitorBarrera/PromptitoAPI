@@ -43,19 +43,19 @@ namespace Promptito.API.Controladores
             return await _servicioCRUD.GetAll();
         }
 
-        [HttpGet("[controller]/prompt/paginacion", Name = "GetPaginacionPrompt")]
+        [HttpGet("[controller]/paginacion", Name = "GetPaginacionPrompt")]
         public async Task<ActionResult<ObjetoPaginacion<PromptDTONavegacion>>> GetAllPagination([FromQuery] int pagina = 1, [FromQuery] int cantidadPorPagina = 10)
         {
             return await _servicioPaginacion.GetAllPromptsPagination(pagina, cantidadPorPagina);
         }
 
-        [HttpGet("[controller]/prompt/dto/paginacion", Name = "GetPaginacionDTOPrompt")]
+        [HttpGet("[controller]/dto/paginacion", Name = "GetPaginacionDTOPrompt")]
         public async Task<ActionResult<ObjetoPaginacion<PromptDTO>>> GetAllDTOPagination([FromQuery] int pagina = 1, [FromQuery] int cantidadPorPagina = 10)
         {
             return await _servicioPaginacion.GetAllPromptsDTOPagination(pagina, cantidadPorPagina);
         }
 
-        [HttpGet("[controller]/prompt/paginacionFiltrado", Name = "GetPaginacionDTOPromptFiltrado")]
+        [HttpGet("[controller]/paginacionFiltrado", Name = "GetPaginacionDTOPromptFiltrado")]
         public async Task<ActionResult<ObjetoPaginacion<PromptDTONavegacion>>> GetFilteredPromptsDTOPagination(
             [FromQuery] string? tituloPrompt,
             [FromQuery] string? nombreAutor,
