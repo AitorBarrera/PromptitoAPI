@@ -18,6 +18,8 @@ namespace Promptito.Application.DTO
 
         public string? contenidoPrompt { get; set; } = string.Empty;
 
+        public string? orderBy { get; set; } = string.Empty;
+
         public int? idLlm { get; set; }
 
         public int? idPromptTematica { get; set; }

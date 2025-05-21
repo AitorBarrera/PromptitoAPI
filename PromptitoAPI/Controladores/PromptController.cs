@@ -60,6 +60,7 @@ namespace Promptito.API.Controladores
             [FromQuery] string? tituloPrompt,
             [FromQuery] string? nombreAutor,
             [FromQuery] string? contenidoPrompt,
+            [FromQuery] string? orderBy,
             [FromQuery] int? idLlm,
             [FromQuery] int? idPromptTematica,
             [FromQuery] int? idUsarioFavorito,
@@ -71,6 +72,7 @@ namespace Promptito.API.Controladores
             filtros.tituloPrompt = tituloPrompt;
             filtros.nombreAutor = nombreAutor;
             filtros.contenidoPrompt = contenidoPrompt;
+            filtros.orderBy = orderBy;
             filtros.idLlm = idLlm;
             filtros.idPromptTematica = idPromptTematica;
             filtros.idUsarioFavorito = idUsarioFavorito;
