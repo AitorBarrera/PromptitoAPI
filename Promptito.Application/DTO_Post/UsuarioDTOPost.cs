@@ -14,5 +14,7 @@ public partial class UsuarioDTOPost
 
     public string? AvatarUrl { get; set; }
 
+    public string? IdClerk { get; set; }
+
     public bool EstaActivo { get; set; }
 }

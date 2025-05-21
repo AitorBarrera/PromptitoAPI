@@ -230,6 +230,8 @@ public partial class PromptitoDbContext : DbContext, IPromptitoDbContext{
             entity.Property(e => e.Email)
                 .HasMaxLength(50)
                 .HasColumnName("email");
+
+            entity.Property(e => e.IdClerk).HasColumnName("idClerk");
             entity.Property(e => e.EstaActivo).HasColumnName("esta_activo");
             entity.Property(e => e.Nombre)
                 .HasMaxLength(30)

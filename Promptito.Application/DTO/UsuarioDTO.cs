@@ -15,6 +15,8 @@ public partial class UsuarioDTO
 
     public string? AvatarUrl { get; set; }
 
+    public string? IdClerk { get; set; }
+
     public bool EstaActivo { get; set; }
 
 }

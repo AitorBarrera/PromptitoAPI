@@ -15,6 +15,8 @@ public partial class Usuario
 
     public string? AvatarUrl { get; set; }
 
+    public string? IdClerk { get; set; }
+
     public bool EstaActivo { get; set; }
 
     public virtual ICollection<Prompt> PromptsCreados { get; set; } = new List<Prompt>();

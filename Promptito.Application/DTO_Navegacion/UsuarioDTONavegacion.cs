@@ -16,6 +16,8 @@ public partial class UsuarioDTONavegacion
 
     public string? AvatarUrl { get; set; }
 
+    public string? IdClerk { get; set; }
+
     public bool EstaActivo { get; set; }
 
     public virtual ICollection<PromptDTO> PromptsCreados { get; set; } = new List<PromptDTO>();

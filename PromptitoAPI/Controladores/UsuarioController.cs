@@ -55,6 +55,12 @@ namespace Promptito.API.Controladores
             return await _servicioCRUD.GetByIdDTO(id);
         }
 
+        //[HttpGet("[controller]/dto/getByIdClerk/{id}", Name = "GetUsuarioDTOByIdClerk")]
+        //public async Task<ActionResult<UsuarioDTO>> GetByIdClerkDTOController(int id)
+        //{
+        //    return  await _context.Set<TEntity>().FindAsync(id);
+        //}
+
         [HttpPost("[controller]", Name = "PostUsuario")]
         public async Task<ActionResult<UsuarioDTO>> PostController(UsuarioDTOPost dto)
         {
