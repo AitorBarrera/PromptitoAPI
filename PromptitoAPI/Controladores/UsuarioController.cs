@@ -20,15 +20,18 @@ namespace Promptito.API.Controladores
         private readonly IServicioCRUD<Usuario, UsuarioDTO, UsuarioDTONavegacion, UsuarioDTOPost> _servicioCRUD;
         private readonly IServicioFavoritos _servicioFavoritos;
         private readonly IServicioNavegacionPorId _servicioNavegacionPorId;
+        private readonly IServicioUsuario _servicioUsuario;
 
         public UsuarioController(
             IServicioCRUD<Usuario, UsuarioDTO, UsuarioDTONavegacion, UsuarioDTOPost> servicioCRUD,
             IServicioFavoritos servicioFavoritos, 
-            IServicioNavegacionPorId servicioNavegacionPorId)
+            IServicioNavegacionPorId servicioNavegacionPorId,
+            IServicioUsuario servicioUsuario)
         {
             _servicioCRUD = servicioCRUD;
             _servicioFavoritos = servicioFavoritos;
             _servicioNavegacionPorId = servicioNavegacionPorId;
+            _servicioUsuario = servicioUsuario;
         }
 
         [HttpGet("[controller]", Name = "GetAllUsuario")]
@@ -55,11 +58,11 @@ namespace Promptito.API.Controladores
             return await _servicioCRUD.GetByIdDTO(id);
         }
 
-        //[HttpGet("[controller]/dto/getByIdClerk/{id}", Name = "GetUsuarioDTOByIdClerk")]
-        //public async Task<ActionResult<UsuarioDTO>> GetByIdClerkDTOController(int id)
-        //{
-        //    return  await _context.Set<TEntity>().FindAsync(id);
-        //}
+        [HttpGet("[controller]/dto/getByIdClerk/", Name = "GetUsuarioDTOByIdClerk")]
+        public async Task<ActionResult<UsuarioDTO>> GetByIdClerkDTOController([FromQuery] string idClerk)
+        {
+            return await _servicioUsuario.GetByIdClerkDTOController(idClerk);
+        }
 
         [HttpPost("[controller]", Name = "PostUsuario")]
         public async Task<ActionResult<UsuarioDTO>> PostController(UsuarioDTOPost dto)

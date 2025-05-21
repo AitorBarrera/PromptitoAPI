@@ -16,8 +16,8 @@ namespace Promptito.Application.Interfaces
     public interface IServicioPromptTematica
     {
 
-        Task<ActionResult<PromptDTONavegacion>> AddTematicaToPrompt([FromQuery] int promptId, int tematicaId);
+        Task<ActionResult<PromptDTONavegacion>> AddTematicaToPrompt(int promptId, int tematicaId);
 
-        Task<ActionResult<string>> RemoveTematicaFromPrompt([FromQuery] int promptId, int tematicaId);
+        Task<ActionResult<string>> RemoveTematicaFromPrompt(int promptId, int tematicaId);
     }
 }

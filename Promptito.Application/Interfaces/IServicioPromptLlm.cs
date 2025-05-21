@@ -16,8 +16,8 @@ namespace Promptito.Application.Interfaces
     public interface IServicioPromptLlm
     {
 
-        Task<ActionResult<PromptDTONavegacion>> AddLlmToPrompt([FromQuery] int promptId, int llmId);
+        Task<ActionResult<PromptDTONavegacion>> AddLlmToPrompt(int promptId, int llmId);
 
-        Task<ActionResult<string>> RemoveLlmFromPrompt([FromQuery] int promptId, int llmId);
+        Task<ActionResult<string>> RemoveLlmFromPrompt( int promptId, int llmId);
     }
 }
