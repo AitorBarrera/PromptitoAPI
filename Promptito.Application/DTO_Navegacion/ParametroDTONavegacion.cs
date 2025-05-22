@@ -15,5 +15,5 @@ public partial class ParametroDTONavegacion
 
     public virtual ICollection<OpcionParametroDTO> OpcionParametros { get; set; } = new List<OpcionParametroDTO>();
 
-    public virtual PromptVarianteDTO PromptVariante { get; set; } = null!;
+    //public virtual PromptVarianteDTO PromptVariante { get; set; } = null!;
 }

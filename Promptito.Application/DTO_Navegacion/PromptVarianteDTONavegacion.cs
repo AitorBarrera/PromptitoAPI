@@ -12,7 +12,7 @@ public partial class PromptVarianteDTONavegacion
 
     public string TextoPrompt { get; set; } = null!;
 
-    public virtual ICollection<ParametroDTO> Parametros { get; set; } = new List<ParametroDTO>();
+    public virtual ICollection<ParametroDTONavegacion> Parametros { get; set; } = new List<ParametroDTONavegacion>();
 
     public virtual PromptDTO Prompt { get; set; } = null!;
 }
