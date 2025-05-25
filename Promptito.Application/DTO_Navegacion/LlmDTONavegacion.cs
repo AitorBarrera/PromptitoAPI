@@ -11,7 +11,5 @@ public partial class LlmDTONavegacion
 
     public string Nombre { get; set; } = null!;
 
-    public string Version { get; set; } = null!;
-
     public virtual ICollection<PromptDTO> Prompts { get; set; } = new List<PromptDTO>();
 }

@@ -9,7 +9,5 @@ public partial class Llm
 
     public string Nombre { get; set; } = null!;
 
-    public string Version { get; set; } = null!;
-
     public virtual ICollection<Prompt> Prompts { get; set; } = new List<Prompt>();
 }

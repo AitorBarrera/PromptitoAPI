@@ -7,6 +7,4 @@ public partial class LlmDTOPost
 {
 
     public string Nombre { get; set; } = null!;
-
-    public string Version { get; set; } = null!;
 }

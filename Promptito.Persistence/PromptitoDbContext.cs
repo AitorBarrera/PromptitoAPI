@@ -50,15 +50,10 @@ public partial class PromptitoDbContext : DbContext, IPromptitoDbContext{
 
             entity.ToTable("llm");
 
-            entity.HasIndex(e => new { e.Nombre, e.Version }, "llm_nombre_version_key").IsUnique();
-
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Nombre)
                 .HasMaxLength(30)
                 .HasColumnName("nombre");
-            entity.Property(e => e.Version)
-                .HasMaxLength(10)
-                .HasColumnName("version");
         });
 
         modelBuilder.Entity<OpcionParametro>(entity =>
