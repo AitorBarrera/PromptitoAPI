@@ -1,29 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Promptito.Application;
 using Promptito.Application.Interfaces;
+using Promptito.Persistance;
 
 namespace Promptito.Persistence
 {
     public static class DependencyInjection
     {
+        //Añadir el contexto de la base de datos al projecto y conectar con la conexion definida en la configuracion del projecto
         public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<PromptitoPgAdminContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("PromptitoDbConnection"))
+            services.AddDbContext<PromptitoDbContext>(options =>
+                options.UseNpgsql(configuration.GetConnectionString("PromptitoDbConnection")));
 
-                );
-
-            services.AddScoped<IPromptitoPgAdminContext>(provider =>
-                provider.GetService<PromptitoPgAdminContext>());
+            services.AddScoped<IPromptitoDbContext>(provider => 
+                provider.GetService<PromptitoDbContext>());
 
             return services;
         }
+
     }
 }

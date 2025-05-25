@@ -7,13 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Promptito.Domain.Modelos;
 
-namespace Promptito.Application.DTO
-{
-    public class PromptDTO
-    {
-        public int Id { get; set; }
+namespace Promptito.Application.DTO_Post;
 
-        public string Titulo { get; set; } = null!;
+    public class PromptDTOPost
+{
+
+    public string Titulo { get; set; } = null!;
 
         public string Descripcion { get; set; } = null!;
 
@@ -21,4 +20,4 @@ namespace Promptito.Application.DTO
 
         public int UsuarioCreadorId { get; set; }
     }
-}
+

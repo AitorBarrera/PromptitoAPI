@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Promptito.Domain.Modelos;
+namespace Promptito.Application.DTO_Post;
 
-public partial class Usuario
+public partial class UsuarioDTOPost
 {
-    public int Id { get; set; }
 
     public string Nombre { get; set; } = null!;
 
@@ -18,8 +17,4 @@ public partial class Usuario
     public string? IdClerk { get; set; }
 
     public bool EstaActivo { get; set; }
-
-    public virtual ICollection<Prompt> PromptsCreados { get; set; } = new List<Prompt>();
-
-    public virtual ICollection<Prompt> PromptsFavoritos { get; set; } = new List<Prompt>();
 }

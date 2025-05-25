@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Promptito.Domain.Modelos;
 
-public partial class Usuario
+public partial class UsuarioDTO
 {
     public int Id { get; set; }
 
@@ -19,7 +19,4 @@ public partial class Usuario
 
     public bool EstaActivo { get; set; }
 
-    public virtual ICollection<Prompt> PromptsCreados { get; set; } = new List<Prompt>();
-
-    public virtual ICollection<Prompt> PromptsFavoritos { get; set; } = new List<Prompt>();
 }
