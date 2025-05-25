@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Promptito.Application.DTO;
 using Promptito.Application.DTO_Post;
+using Promptito.Application.DTO_PostConNavegacion;
 using Promptito.Application.Excepciones;
 using Promptito.Application.Interfaces;
 using Promptito.Application.NavegacionDTO;
@@ -22,19 +23,22 @@ namespace Promptito.API.Controladores
         private readonly IServicioPromptTematica _servicioPromptTematica;
         private readonly IServicioNavegacionPorId _servicioNavegacionPorId;
         private readonly IServicioPaginacion _servicioPaginacion;
+        private readonly IServicioPostConNavegacion _servicioPostConNavegacion;
 
         public PromptController(
             IServicioCRUD<Prompt, PromptDTO, PromptDTONavegacion, PromptDTOPost> servicioCRUD,
             IServicioPromptLlm servicioPromptLlm,
             IServicioPromptTematica servicioPromptTematica, 
             IServicioNavegacionPorId servicioNavegacionPorId,
-            IServicioPaginacion servicioPaginacion)
+            IServicioPaginacion servicioPaginacion,
+            IServicioPostConNavegacion servicioPostConNavegacion)
         {
             _servicioCRUD = servicioCRUD;
             _servicioPromptLlm = servicioPromptLlm;
             _servicioPromptTematica = servicioPromptTematica;
             _servicioNavegacionPorId = servicioNavegacionPorId;
             _servicioPaginacion = servicioPaginacion;
+            _servicioPostConNavegacion = servicioPostConNavegacion;
         }
 
         [HttpGet("[controller]", Name = "GetAllPrompt")]
@@ -104,6 +108,12 @@ namespace Promptito.API.Controladores
         public async Task<ActionResult<PromptDTO>> PostController(PromptDTOPost dto)
         {
             return await _servicioCRUD.Post(dto);
+        }
+
+        [HttpPost("[controller]/navegacion", Name = "PostPromptConNavegacion")]
+        public async Task<ActionResult<string>> AddPromptConNavegacion(PromptDTOPostConNavegacion promptConNavegacion)
+        {
+            return await _servicioPostConNavegacion.AddPromptConNavegacion(promptConNavegacion);
         }
 
         [HttpPut("[controller]", Name = "UpdatePrompt")]

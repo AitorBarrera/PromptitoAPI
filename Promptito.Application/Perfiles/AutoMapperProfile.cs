@@ -3,6 +3,7 @@ using Promptito.Application.DTO;
 using Promptito.Application.NavegacionDTO;
 using Promptito.Application.DTO_Post;
 using Promptito.Domain.Modelos;
+using Promptito.Application.DTO_PostConNavegacion;
 
 namespace Promptito.Application.Perfiles
 {
@@ -38,6 +39,13 @@ namespace Promptito.Application.Perfiles
             CreateMap<PromptVarianteDTOPost, PromptVariante>();
             CreateMap<TematicaDTOPost, Tematica>();
             CreateMap<UsuarioDTOPost, Usuario>();
+
+            CreateMap<PromptDTOPostConNavegacion, Prompt>();
+            CreateMap<LlmDTOPostConNavegacion, Llm>();
+            CreateMap<OpcionParametroDTOPostConNavegacion, OpcionParametro>();
+            CreateMap<ParametroDTOPostConNavegacion, Parametro>();
+            CreateMap<PromptVarianteDTOPostConNavegacion, PromptVariante>();
+            CreateMap<TematicaDTOPostConNavegacion, Tematica>();
         }
     }
 }
