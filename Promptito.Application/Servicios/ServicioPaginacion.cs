@@ -79,7 +79,7 @@ namespace Promptito.Application.Servicios
 
             if (!string.IsNullOrEmpty(filtros.nombreAutor))
             {
-                query = query.Where(p => p.UsuarioCreador.Nombre.Contains(filtros.nombreAutor));
+                query = query.Where(p => p.UsuarioCreador.Nombre.ToLower().Contains(filtros.nombreAutor.ToLower()));
             }
 
             if (!string.IsNullOrEmpty(filtros.contenidoPrompt))
