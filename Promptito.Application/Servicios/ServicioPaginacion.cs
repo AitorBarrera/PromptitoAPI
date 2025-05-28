@@ -135,7 +135,7 @@ namespace Promptito.Application.Servicios
                     break;
 
                 default:
-                    query = query.OrderByDescending(p => p.FechaCreacion);
+                    query = query.OrderByDescending(p => p.EnFavoritosDe.Count());
 
                     break;
             }
