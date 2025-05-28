@@ -129,6 +129,11 @@ namespace Promptito.Application.Servicios
 
                     break;
 
+                case "popularidad":
+                    query = query.OrderByDescending(p => p.EnFavoritosDe.Count());
+
+                    break;
+
                 default:
                     query = query.OrderByDescending(p => p.FechaCreacion);
 
