@@ -12,7 +12,7 @@ namespace Promptito.Application.DTO_Post;
     public class PromptDTOPost
 {
 
-    public string Titulo { get; set; } = null!;
+        public string Titulo { get; set; } = null!;
 
         public string Descripcion { get; set; } = null!;
 

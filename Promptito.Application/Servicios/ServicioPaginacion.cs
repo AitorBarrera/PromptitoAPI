@@ -110,12 +110,12 @@ namespace Promptito.Application.Servicios
             switch (filtros.orderBy)
             {
                 case "fechaAsc":
-                    query = query.OrderBy(p => p.FechaCreacion);
+                    query = query.OrderBy(p => p.Id);
 
                 break;
 
                 case "fechaDesc":
-                    query = query.OrderByDescending(p => p.FechaCreacion);
+                    query = query.OrderByDescending(p => p.Id);
 
                     break;
 
