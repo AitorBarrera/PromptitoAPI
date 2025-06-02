@@ -62,5 +62,8 @@ app.UseExcepciones();
 //app.UseAuthorization();
 
 app.MapControllers();
-
+app.MapGet("/", () => 
+{
+    return Results.Redirect("/swagger");
+});
 app.Run();
